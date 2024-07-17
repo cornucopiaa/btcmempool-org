@@ -59,7 +59,7 @@
     display: flex;
     flex-direction: row;
   }
-  &.lbtc-pegs-stats { 
+  &.lbtc-pegs-stats {
     display: flex;
     flex-direction: row;
   }
@@ -442,4 +442,18 @@
   text-align: center;
   padding-bottom: 3px;
   font-weight: 500;
+}
+
+.additional-description-main-page {
+  div, h4, h5 {
+    text-align: left;
+  }
+}
+
+.additional-description-main-page__section {
+  margin-top: 30px;
+}
+
+.additional-description-main-page__section-title {
+  margin-top: 14px;
 }

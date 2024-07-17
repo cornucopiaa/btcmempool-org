@@ -61,54 +61,47 @@ $dropdown-link-active-bg: $active-bg;
 @import 'tlite/tlite.css';
 
 :root {
-  --bg: #{$bg};
-  --active-bg: #{$active-bg};
-  --hover-bg: #{$hover-bg};
-  --fg: #{$fg};
-  --nav-bg: #{$nav-bg};
-  --title-fg: #{$title-fg};
-
-  --primary: #{$primary};
-  --secondary: #{$secondary};
-  --tertiary: #{$tertiary};
-  --success: #{$success};
-  --info: #{$info};
-  --link-color: #{$link-color};
-  --link-hover-color: #{$link-hover-color};
+  --bg: #191E48;
+  --active-bg: #171C3B;
+  --hover-bg: #12131e;
+  --fg: #fff;
+  --nav-bg: #191E48;
+  --title-fg: #42aed7;
+  --primary: #105fb0;
+  --secondary: #1E2B52;
+  --tertiary: #1077d1;
+  --success: #1a9436;
+  --info: #1bd8f4;
+  --link-color: #54b9ff;
+  --link-hover-color: #0d7cca;
   --icon: #f1f1f1;
   --skeleton-bg: #2e324e;
   --skeleton-bg-light: #5d6182;
-
   --box-bg: #24273e;
-  --stat-box-bg: #181b2d;
+  --stat-box-bg: #1F2A1B;
   --alert-bg: #3a1c61;
   --navbar-bg: #212121;
   --transparent-fg: #ffffff66;
   --fade-out-box-bg-start: rgba(36, 39, 62, 0);
   --fade-out-box-bg-end: rgba(36, 39, 62, 1);
-  --opacity: 0.57;
-
+  --opacity: .57;
   --testnet: #1d486f;
   --signet: #6f1d5d;
   --liquid: #116761;
   --liquidtestnet: #494a4a;
-
-  --mainnet-alt: #9339f4;
+  --mainnet-alt: #0daac9;
   --testnet-alt: #183550;
   --signet-alt: #471850;
   --liquidtestnet-alt: #272e46;
-
   --taproot: #eba814;
   --taproot-light: #d5a90a;
   --taproot-dark: #9d7c05;
-
-  --green: #3bcc49;
+  --green: #20eb34;
   --red: #dc3545;
   --yellow: #fff000;
-  --grey: #6c757d;
+  --grey: #dcdcdc;
   --tooltip-grey: #b1b1b1;
   --orange: #b86d12;
-
   --search-button: #4d2d77;
   --search-button-border: #472a6e;
   --search-button-focus: #533180;
@@ -183,7 +176,7 @@ main {
 
 .form-control {
   color: var(--fg);
-  background-color: var(--secondary);
+  background-color: #e0e8ff;
   border: 1px solid rgba(17, 19, 31, 0.2);
 }
 
@@ -1288,7 +1281,7 @@ app-global-footer {
 .dropdown-menu {
   background-color: var(--bg);
   color: var(--fg);
-  .dropdown-item:hover, .dropdown-item:focus { 
+  .dropdown-item:hover, .dropdown-item:focus {
     background-color: var(--active-bg);
     color: var(--fg);
   }
@@ -1315,7 +1308,7 @@ a {
   background-color: var(--info);
 }
 
-.btn-primary { 
+.btn-primary {
   color: var(--fg);
   background-color: var(--primary);
   border-color: var(--primary);

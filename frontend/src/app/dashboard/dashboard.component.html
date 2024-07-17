@@ -3,7 +3,7 @@
   <div class="row row-cols-1 row-cols-md-2" *ngIf="{ value: (mempoolInfoData$ | async) } as mempoolInfoData">
     <ng-container>
       <div class="col card-wrapper">
-        <div class="main-title" i18n="fees-box.transaction-fees">Transaction Fees</div>
+        <div class="main-title" i18n="fees-box.transaction-fees">Bitcoin Transaction Fees</div>
         <div class="card">
           <div class="card-body less-padding">
             <app-fees-box class="d-block"></app-fees-box>
@@ -178,7 +178,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col">
         <div class="card-liquid card">
           <h5 class="card-title" style="padding-top: 20px;" i18n="dashboard.lbtc-supply-against-btc-holdings">L-BTC Supply Against BTC Holdings</h5>
@@ -187,9 +187,9 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card"> 
+        <div class="card-liquid card">
           <div class="card-body">
             <app-reserves-ratio-stats [fullHistory$]="fullHistory$" [emergencyUtxosStats$]="emergencySpentUtxosStats$"></app-reserves-ratio-stats>
             <app-reserves-ratio [currentPeg]="currentPeg$ | async" [currentReserves]="currentReserves$ | async"></app-reserves-ratio>
@@ -318,7 +318,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col">
         <div class="card-liquid card">
           <h5 class="card-title" style="padding-top: 20px;" i18n="dashboard.lbtc-supply-against-btc-holdings">L-BTC Supply Against BTC Holdings</h5>
@@ -327,9 +327,9 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card"> 
+        <div class="card-liquid card">
           <div class="card-body">
             <app-reserves-ratio-stats></app-reserves-ratio-stats>
             <app-reserves-ratio></app-reserves-ratio>
@@ -366,3 +366,38 @@
     </div>
   </ng-container>
 </ng-template>
+
+<div class="additional-description-main-page container-xl dashboard-container">
+  <h4 class="additional-description-main-page__title">Welcome to BTCmempool Explorer</h4>
+  <div class="additional-description-main-page__section">
+    <h5 class="additional-description-main-page__section-title">Understanding Bitcoin and Mempool Explorers</h5>
+    <div class="additional-description-main-page__section-content">Navigating the world of Bitcoin can seem daunting, but with the right tools, it becomes much simpler. BTCmempool is your go-to resource for understanding and utilizing Mempool and Bitcoin explorers. Here, we break down these concepts to help you make the most of your Bitcoin transactions.</div>
+  </div>
+  <div class="additional-description-main-page__section">
+    <h5 class="additional-description-main-page__section-title">What is the Mempool?</h5>
+    <div class="additional-description-main-page__section-content">The Mempool, short for "memory pool," is a collection of all the Bitcoin transactions that have been broadcast to the network but have not yet been included in a block. It acts as a waiting area for transactions before they are confirmed by miners and added to the blockchain.</div>
+    <h5 class="additional-description-main-page__section-title">&nbsp;&nbsp;&nbsp;&nbsp;1. What happens if my transaction is stuck in the mempool?</h5>
+    <div class="additional-description-main-page__section-content">If your transaction is stuck in the mempool, it means it's waiting for confirmation. This can happen if the transaction fee is too low. You can either wait or use a feature called Replace-by-Fee (RBF) to increase the fee.</div>
+    <h5 class="additional-description-main-page__section-title">&nbsp;&nbsp;&nbsp;&nbsp;2. Why is the mempool size important?</h5>
+    <div class="additional-description-main-page__section-content">The mempool size indicates the number of transactions waiting to be confirmed. A larger mempool can mean longer transaction times and higher fees, as more transactions are competing to be included in the next block.</div>
+  </div>
+  <div class="additional-description-main-page__section">
+    <h5 class="additional-description-main-page__section-title">What is a Mempool Explorer?</h5>
+    <div class="additional-description-main-page__section-content">A Mempool Explorer is a specialized tool that allows you to monitor and analyze the mempool. It provides insights into the number of pending transactions, their fees, and their sizes. This information is crucial for understanding network congestion and estimating transaction confirmation times.</div>
+    <h5 class="additional-description-main-page__section-title">&nbsp;&nbsp;&nbsp;&nbsp;1. How do I use a Mempool Explorer?</h5>
+    <div class="additional-description-main-page__section-content">To use a Mempool Explorer, you can search for your transaction ID to see its status in the mempool. You can also view overall mempool statistics to gauge network activity.</div>
+    <h5 class="additional-description-main-page__section-title">&nbsp;&nbsp;&nbsp;&nbsp;2. What can I learn from a Mempool Explorer?</h5>
+    <div class="additional-description-main-page__section-content">A Mempool Explorer can show you the current state of the network, including transaction fees, pending transactions, and estimated confirmation times. This helps in deciding the optimal fee for quicker transaction confirmation.</div>
+  </div>
+  <div class="additional-description-main-page__section">
+    <h5 class="additional-description-main-page__section-title">What is a Bitcoin Explorer?</h5>
+    <div class="additional-description-main-page__section-content">A Bitcoin Explorer is a web tool that allows you to search and navigate through the Bitcoin blockchain. It provides detailed information on Bitcoin transactions, blocks, addresses, and more. Using a Bitcoin Explorer, you can track the status of your transactions, see the history of Bitcoin addresses, and explore the details of individual blocks.</div>
+    <h5 class="additional-description-main-page__section-title">&nbsp;&nbsp;&nbsp;&nbsp;1. How long does a Bitcoin transfer take?</h5>
+    <div class="additional-description-main-page__section-content">Bitcoin transfers typically take about 10 minutes to be included in a block, but the total time can vary depending on network congestion and the transaction fee.</div>
+    <h5 class="additional-description-main-page__section-title">&nbsp;&nbsp;&nbsp;&nbsp;2. How to use a Bitcoin Explorer?</h5>
+    <div class="additional-description-main-page__section-content">To use a Bitcoin Explorer, simply enter the transaction ID, address, or block number in the search bar. The explorer will display detailed information related to your query.</div>
+  </div>
+  <div class="additional-description-main-page__section">
+    <div class="additional-description-main-page__section-content">BTCmempool is a comprehensive resource for exploring the Bitcoin network. Whether you're tracking a transaction, analyzing the mempool, or diving into the blockchain, our tools and information make it easy to navigate and understand the world of Bitcoin. </div>
+  </div>
+</div>

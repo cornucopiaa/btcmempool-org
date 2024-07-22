@@ -445,6 +445,9 @@
 }
 
 .additional-description-main-page {
+  max-height: 400px;
+  overflow-y: scroll;
+
   div, h4, h5 {
     text-align: left;
   }

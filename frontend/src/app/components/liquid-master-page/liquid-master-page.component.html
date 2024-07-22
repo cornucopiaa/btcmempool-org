@@ -4,7 +4,7 @@
   <a class="navbar-brand" [routerLink]="['/' | relativeUrl]" style="position: relative;">
     <ng-container *ngIf="{ val: connectionState$ | async } as connectionState">
       <div class="logo" [ngStyle]="{'opacity': connectionState.val === 2 ? 1 : 0.5 }">
-        <img class="logo" width="140" height="35" src="/resources/btcmempoollogo.png" />
+        <img class="logo" width="140" height="40" src="/resources/btcmempoollogo.png" />
       </div>
       <div class="connection-badge">
         <div class="badge badge-warning" *ngIf="connectionState.val === 0" i18n="master-page.offline">Offline</div>

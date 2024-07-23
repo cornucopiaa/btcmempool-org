@@ -30,7 +30,7 @@ export class MiningDashboardComponent implements OnInit, AfterViewInit {
     this.seoService.setTitle('Mining Dashboard | BTCmempool.org', true);
     // this.seoService.setDescription($localize`:@@meta.description.mining.dashboard:Get real-time Bitcoin mining stats like hashrate, difficulty adjustment, block rewards, pool dominance, and more.`);
     this.seoService.setDescription('BTCmempool.org provides up-to-the-minute Bitcoin mining stats, including hash rate, difficulty adjustments, block rewards, pool dominance, and more.');
-    this.ogService.setManualOgImage('mining.jpg');
+    // this.ogService.setManualOgImage('mining.jpg');
   }
 
   ngAfterViewInit(): void {

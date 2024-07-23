@@ -62,7 +62,7 @@ export class PoolComponent implements OnInit {
     this.slugSubscription = this.route.params.pipe(map((params) => params.slug)).subscribe((slug) => {
       this.isLoading = true;
       this.blocks = [];
-      this.chartOptions = {};  
+      this.chartOptions = {};
       this.slug = slug;
       this.initializeObservables();
     });
@@ -79,8 +79,10 @@ export class PoolComponent implements OnInit {
           return this.apiService.getPoolStats$(this.slug);
         }),
         map((poolStats) => {
-          this.seoService.setTitle(poolStats.pool.name);
-          this.seoService.setDescription($localize`:@@meta.description.mining.pool:See mining pool stats for ${poolStats.pool.name}\: most recent mined blocks, hashrate over time, total block reward to date, known coinbase addresses, and more.`);
+          // this.seoService.setTitle(poolStats.pool.name);
+          this.seoService.setTitle(`${poolStats.pool.name} - Bitcoin Mining Stats | BTCmempool.org`, true);
+          // this.seoService.setDescription($localize`:@@meta.description.mining.pool:See mining pool stats for ${poolStats.pool.name}\: most recent mined blocks, hashrate over time, total block reward to date, known coinbase addresses, and more.`);
+          this.seoService.setDescription(`Check out ${poolStats.pool.name}'s Bitcoin mining performance: blocks mined, hash rate, and key metrics — access real-time updates on BTCmempool.org.`);
           let regexes = '"';
           for (const regex of poolStats.pool.regexes) {
             regexes += regex + '", "';
@@ -188,9 +190,9 @@ export class PoolComponent implements OnInit {
               hashrateString = `${tick.marker} ${tick.seriesName}: ${formatNumber(hashrateData, this.locale, '1.0-0')} ${hashratePowerOfTen.unit}H/s<br>`;
             } else if (tick.seriesIndex === 1) {
               dominanceString = `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.0-2')}%`;
-            }             
+            }
           }
-          
+
           return `
             <b style="color: white; margin-left: 18px">${ticks[0].axisValueLabel}</b><br>
             <span>${hashrateString}</span>

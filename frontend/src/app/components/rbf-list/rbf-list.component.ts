@@ -58,9 +58,11 @@ export class RbfList implements OnInit, OnDestroy {
       })
     );
 
-    this.seoService.setTitle($localize`:@@5e3d5a82750902f159122fcca487b07f1af3141f:RBF Replacements`);
-    this.seoService.setDescription($localize`:@@meta.description.rbf-list:See the most recent RBF replacements on the Bitcoin${seoDescriptionNetwork(this.stateService.network)} network, updated in real-time.`);
-    this.ogService.setManualOgImage('rbf.jpg');
+    // this.seoService.setTitle($localize`:@@5e3d5a82750902f159122fcca487b07f1af3141f:RBF Replacements`);
+    this.seoService.setTitle('RBF Replacements | BTCmempool.org', true);
+    // this.seoService.setDescription($localize`:@@meta.description.rbf-list:See the most recent RBF replacements on the Bitcoin${seoDescriptionNetwork(this.stateService.network)} network, updated in real-time.`);
+    this.seoService.setDescription('Discover the latest RBF (Replace-By-Fee) transactions on the Bitcoin network, updated in real-time.');
+    // this.ogService.setManualOgImage('rbf.jpg');
   }
 
   ngOnDestroy(): void {

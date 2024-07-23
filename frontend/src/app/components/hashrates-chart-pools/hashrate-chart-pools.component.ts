@@ -71,8 +71,10 @@ export class HashrateChartPoolsComponent implements OnInit {
   ngOnInit(): void {
     let firstRun = true;
 
-    this.seoService.setTitle($localize`:@@mining.pools-historical-dominance:Pools Historical Dominance`);
-    this.seoService.setDescription($localize`:@@meta.descriptions.bitcoin.graphs.hashrate-pools:See Bitcoin mining pool dominance visualized over time: see how top mining pools' share of total hashrate has fluctuated over time.`);
+    // this.seoService.setTitle($localize`:@@mining.pools-historical-dominance:Pools Historical Dominance`);
+    this.seoService.setTitle('Historical Dominance - Bitcoin Mining Pools | BTCmempool.org', true);
+    // this.seoService.setDescription($localize`:@@meta.descriptions.bitcoin.graphs.hashrate-pools:See Bitcoin mining pool dominance visualized over time: see how top mining pools' share of total hashrate has fluctuated over time.`);
+    this.seoService.setDescription('Explore Bitcoin mining pool dominance over time: visualize how top mining pools\' share of the total hashrate has fluctuated.');
     this.miningWindowPreference = this.miningService.getDefaultTimespan('6m');
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
     this.radioGroupForm.controls.dateSpan.setValue(this.miningWindowPreference);

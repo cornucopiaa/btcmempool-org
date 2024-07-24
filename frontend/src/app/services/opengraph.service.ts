@@ -62,11 +62,11 @@ export class OpenGraphService {
   }
 
   clearOgImage() {
-    this.metaService.updateTag({ property: 'og:image', content: this.defaultImageUrl });
-    this.metaService.updateTag({ name: 'twitter:image', content: this.defaultImageUrl });
-    this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
-    this.metaService.updateTag({ property: 'og:image:width', content: '1000' });
-    this.metaService.updateTag({ property: 'og:image:height', content: '500' });
+    // this.metaService.updateTag({ property: 'og:image', content: this.defaultImageUrl });
+    // this.metaService.updateTag({ name: 'twitter:image', content: this.defaultImageUrl });
+    // this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
+    // this.metaService.updateTag({ property: 'og:image:width', content: '1000' });
+    // this.metaService.updateTag({ property: 'og:image:height', content: '500' });
   }
 
   setManualOgImage(imageFilename) {

@@ -176,7 +176,7 @@ nav {
 @media (min-width: 992px) {
   .search-form-container {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     padding-left: 15px;
   }
 }
@@ -294,4 +294,17 @@ main {
   position: sticky;
   top: 65px;
   padding-bottom: 20px;
+}
+
+.logo-links-block {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.logo-links-block__nav {
+  @media (min-width: 720px) {
+    display: none;
+  }
 }

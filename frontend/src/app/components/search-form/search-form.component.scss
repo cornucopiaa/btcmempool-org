@@ -60,3 +60,16 @@ input:focus {
   box-shadow: none;
   border-color: #1b1f2c;
 }
+
+.logo-links-block {
+  display: none;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.logo-links-block__search {
+  @media (min-width: 720px) {
+    display: flex;
+  }
+}

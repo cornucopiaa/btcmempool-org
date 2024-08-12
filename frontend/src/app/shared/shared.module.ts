@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faFilter, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faBolt, faChartArea, faCogs, faCubes, faHammer, faDatabase, faExchangeAlt, faInfoCircle,
@@ -241,6 +241,7 @@ import { OnlyVsizeDirective, OnlyWeightDirective } from './components/weight-dir
     NgbCollapseModule,
     InfiniteScrollModule,
     FontAwesomeModule,
+    NgOptimizedImage,
   ],
   providers: [
     BytesPipe,

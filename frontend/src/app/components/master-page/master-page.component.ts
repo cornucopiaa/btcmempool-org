@@ -36,6 +36,10 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   enterpriseInfo: any;
   enterpriseInfo$: Subscription;
 
+  bitcoinImageSource = `${window.location.protocol}//${window.location.host}/resources/Bitcoin-menu-logo.svg`;
+  ethImageSource = `${window.location.protocol}//${window.location.host}/resources/Ethereum-menu-logo.svg`;
+  moneroImageSource = `${window.location.protocol}//${window.location.host}/resources/Monero-menu-logo.svg`;
+
   @ViewChild(MenuComponent)
   public menuComponent!: MenuComponent;
 

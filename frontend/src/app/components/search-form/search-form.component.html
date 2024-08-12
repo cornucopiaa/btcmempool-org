@@ -9,6 +9,11 @@
         <fa-icon *ngIf="!(isTypeaheading$ | async) else searchLoading" [icon]="['fas', 'search']" [fixedWidth]="true" i18n-title="search-form.search-title" title="Search"></fa-icon>
       </button>
     </div>
+    <div class="logo-links-block logo-links-block__search">
+      <a href="https://btcscan.org/" target="_blank"><img [src]="bitcoinImageSource" alt="bitcoin logo"></a>
+      <a href="https://ethscan.org/" target="_blank"><img [src]="ethImageSource" alt="ethereum logo"></a>
+      <a href="https://xmrscan.org/" target="_blank"><img [src]="moneroImageSource" alt="monero logo"></a>
+    </div>
   </div>
 </form>
 

@@ -32,9 +32,13 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   servicesEnabled = false;
   menuOpen = false;
   isDropdownVisible: boolean;
-  
+
   enterpriseInfo: any;
   enterpriseInfo$: Subscription;
+
+  bitcoinImageSource = `${window.location.protocol}//${window.location.host}/resources/Bitcoin-menu-logo.svg`;
+  ethImageSource = `${window.location.protocol}//${window.location.host}/resources/Ethereum-menu-logo.svg`;
+  moneroImageSource = `${window.location.protocol}//${window.location.host}/resources/Monero-menu-logo.svg`;
 
   @ViewChild(MenuComponent)
   public menuComponent!: MenuComponent;
@@ -69,7 +73,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
     this.enterpriseInfo$ = this.enterpriseService.info$.subscribe(info => {
       this.enterpriseInfo = info;
     });
-    
+
     this.servicesEnabled = this.officialMempoolSpace && this.stateService.env.ACCELERATOR === true && this.stateService.network === '';
     this.refreshAuth();
 

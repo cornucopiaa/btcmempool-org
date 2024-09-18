@@ -59,7 +59,9 @@ export class MempoolBlockComponent implements OnInit, OnDestroy {
                 const ordinal = this.getOrdinal(mempoolBlocks[this.mempoolBlockIndex]);
                 this.ordinal$.next(ordinal);
                 this.seoService.setTitle(ordinal);
-                this.seoService.setDescription($localize`:@@meta.description.mempool-block:See stats for ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} transactions in the mempool: fee range, aggregate size, and more. Mempool blocks are updated in real-time as the network receives new transactions.`);
+                this.seoService.setTitle('Mempool Block - Bitcoin Transactions | BTCmempool.org', true);
+                // this.seoService.setDescription($localize`:@@meta.description.mempool-block:See stats for ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} transactions in the mempool: fee range, aggregate size, and more. Mempool blocks are updated in real-time as the network receives new transactions.`);
+                this.seoService.setDescription('View real-time Bitcoin transaction stats in the mempool: fee range, size, and more. Mempool blocks update as the network receives new transactions.');
                 mempoolBlocks[this.mempoolBlockIndex].isStack = mempoolBlocks[this.mempoolBlockIndex].blockVSize > this.stateService.blockVSize;
                 return mempoolBlocks[this.mempoolBlockIndex];
               })
@@ -85,6 +87,7 @@ export class MempoolBlockComponent implements OnInit, OnDestroy {
     const blocksInBlock = Math.ceil(mempoolBlock.blockVSize / this.stateService.blockVSize);
     if (this.mempoolBlockIndex === 0) {
       return $localize`:@@bdf0e930eb22431140a2eaeacd809cc5f8ebd38c:Next Block`;
+      // return 'Mempool Block - Bitcoin Transactions | BTCmempool.org';
     } else if (this.mempoolBlockIndex === this.stateService.env.KEEP_BLOCKS_AMOUNT - 1 && blocksInBlock > 1) {
       return $localize`:@@mempool-block.stack.of.blocks:Stack of ${blocksInBlock}:INTERPOLATION: mempool blocks`;
     } else {

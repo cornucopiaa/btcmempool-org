@@ -50,21 +50,23 @@ export class OpenGraphService {
   }
 
   setOgImage() {
-    const lang = this.LanguageService.getLanguage();
-    const ogImageUrl = `${window.location.protocol}//${window.location.host}/render/${lang}/preview${this.router.url}`;
+    // const lang = this.LanguageService.getLanguage();
+    // const ogImageUrl = `${window.location.protocol}//${window.location.host}/render/${lang}/preview${this.router.url}`;
+    const ogImageUrl = `${window.location.protocol}//${window.location.host}/resources/previews/mempool-space-preview.png`;
+    // const ogImageUrl = 'https://btcmempool.org/resources/previews/mempool-space-preview.png';
     this.metaService.updateTag({ property: 'og:image', content: ogImageUrl });
     this.metaService.updateTag({ name: 'twitter:image', content: ogImageUrl });
     this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
-    this.metaService.updateTag({ property: 'og:image:width', content: '1200' });
-    this.metaService.updateTag({ property: 'og:image:height', content: '600' });
+    this.metaService.updateTag({ property: 'og:image:width', content: '1920' });
+    this.metaService.updateTag({ property: 'og:image:height', content: '960' });
   }
 
   clearOgImage() {
-    this.metaService.updateTag({ property: 'og:image', content: this.defaultImageUrl });
-    this.metaService.updateTag({ name: 'twitter:image', content: this.defaultImageUrl });
-    this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
-    this.metaService.updateTag({ property: 'og:image:width', content: '1000' });
-    this.metaService.updateTag({ property: 'og:image:height', content: '500' });
+    // this.metaService.updateTag({ property: 'og:image', content: this.defaultImageUrl });
+    // this.metaService.updateTag({ name: 'twitter:image', content: this.defaultImageUrl });
+    // this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
+    // this.metaService.updateTag({ property: 'og:image:width', content: '1000' });
+    // this.metaService.updateTag({ property: 'og:image:height', content: '500' });
   }
 
   setManualOgImage(imageFilename) {

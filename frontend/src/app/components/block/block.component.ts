@@ -80,7 +80,7 @@ export class BlockComponent implements OnInit, OnDestroy {
   childChangeSubscription: Subscription;
   auditPrefSubscription: Subscription;
   oobSubscription: Subscription;
-  
+
   priceSubscription: Subscription;
   blockConversion: Price;
 
@@ -257,12 +257,14 @@ export class BlockComponent implements OnInit, OnDestroy {
         this.nextBlockHeight = block.height + 1;
         this.setNextAndPreviousBlockLink();
 
-        this.seoService.setTitle($localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`);
-        if( this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
-          this.seoService.setDescription($localize`:@@meta.description.liquid.block:See size, weight, fee range, included transactions, and more for Liquid${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
-        } else {
-          this.seoService.setDescription($localize`:@@meta.description.bitcoin.block:See size, weight, fee range, included transactions, audit (expected v actual), and more for Bitcoin${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
-        }
+        // this.seoService.setTitle($localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`);
+        this.seoService.setTitle(`Bitcoin Block ${block.height} | BTCmempool.org`, true);
+        // if( this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
+        //   this.seoService.setDescription($localize`:@@meta.description.liquid.block:See size, weight, fee range, included transactions, and more for Liquid${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
+        // } else {
+        //   this.seoService.setDescription($localize`:@@meta.description.bitcoin.block:See size, weight, fee range, included transactions, audit (expected v actual), and more for Bitcoin${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
+        // }
+        this.seoService.setDescription(`Bitcoin (BTC) block ${block.height}, hash: ${block.id}`);
         this.isLoadingBlock = false;
         this.setBlockSubsidy();
         if (block?.extras?.reward !== undefined) {
@@ -705,7 +707,7 @@ export class BlockComponent implements OnInit, OnDestroy {
       if (queryString) {
         newUrl += '?' + queryString;
       }
-  
+
       this.location.replaceState(newUrl);
     });
 
@@ -725,7 +727,7 @@ export class BlockComponent implements OnInit, OnDestroy {
     return this.route.queryParams.pipe(
       map(params => {
         this.auditParamEnabled = 'audit' in params;
-        
+
         return this.auditParamEnabled ? !(params['audit'] === 'false') : true;
       })
     );

@@ -14,7 +14,7 @@ export class DocsComponent implements OnInit {
 
   activeTab = 0;
   env: Env;
-  showWebSocketTab = true;
+  showWebSocketTab = false;
   showFaqTab = true;
   showElectrsTab = true;
 
@@ -43,24 +43,30 @@ export class DocsComponent implements OnInit {
 
     if (url[0].path === "faq" ) {
       this.activeTab = 0;
-      this.seoService.setTitle($localize`:@@meta.title.docs.faq:FAQ`);
-      this.seoService.setDescription($localize`:@@meta.description.docs.faq:Get answers to common questions like: What is a mempool? Why isn't my transaction confirming? How can I run my own instance of The Mempool Open Source Project? And more.`);
-      this.ogService.setManualOgImage('faq.jpg');
+      // this.seoService.setTitle($localize`:@@meta.title.docs.faq:FAQ`);
+      this.seoService.setTitle('FAQ - Bitcoin Explorer | BTCmempool.org', true);
+      // this.seoService.setDescription($localize`:@@meta.description.docs.faq:Get answers to common questions like: What is a mempool? Why isn't my transaction confirming? How can I run my own instance of The Mempool Open Source Project? And more.`);
+      this.seoService.setDescription('Discover answers to common questions about the mempool and Bitcoin Explorer in our FAQ section. Learn essential information about the Bitcoin network.');
+      // this.ogService.setManualOgImage('faq.jpg');
     } else if( url[1].path === "rest" ) {
       this.activeTab = 1;
-      this.seoService.setTitle($localize`:@@meta.title.docs.rest:REST API`);
+      // this.seoService.setTitle($localize`:@@meta.title.docs.rest:REST API`);
+      this.seoService.setTitle('API Documentation - Bitcoin Explorer | BTCmempool.org', true);
       if (this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
         this.seoService.setDescription($localize`:@@meta.description.docs.rest-liquid:Documentation for the liquid.network REST API service: get info on addresses, transactions, assets, blocks, and more.`);
       } else {
-        this.seoService.setDescription($localize`:@@meta.description.docs.rest-bitcoin:Documentation for the mempool.space REST API service: get info on addresses, transactions, blocks, fees, mining, the Lightning network, and more.`);
+        // this.seoService.setDescription($localize`:@@meta.description.docs.rest-bitcoin:Documentation for the mempool.space REST API service: get info on addresses, transactions, blocks, fees, mining, the Lightning network, and more.`);
+        this.seoService.setDescription('Explore the btcmempool.org REST API documentation to access information on addresses, transactions, blocks, fees, mining, the Lightning Network, and more.');
       }
     } else if( url[1].path === "websocket" ) {
       this.activeTab = 2;
-      this.seoService.setTitle($localize`:@@meta.title.docs.websocket:WebSocket API`);
+      // this.seoService.setTitle($localize`:@@meta.title.docs.websocket:WebSocket API`);
+      this.seoService.setTitle('WebSocket API - Bitcoin Explorer | BTCmempool.org', true);
       if( this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
         this.seoService.setDescription($localize`:@@meta.description.docs.websocket-liquid:Documentation for the liquid.network WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.`);
       } else {
-        this.seoService.setDescription($localize`:@@meta.description.docs.websocket-bitcoin:Documentation for the mempool.space WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.`);
+        // this.seoService.setDescription($localize`:@@meta.description.docs.websocket-bitcoin:Documentation for the mempool.space WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.`);
+        this.seoService.setDescription('Explore the btcmempool.org WebSocket API documentation to access information on blocks, mempools, transactions, addresses, and more.');
       }
     } else {
       this.activeTab = 3;

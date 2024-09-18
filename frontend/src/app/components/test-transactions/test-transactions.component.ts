@@ -32,8 +32,10 @@ export class TestTransactionsComponent implements OnInit {
       maxfeerate: ['', Validators.min(0)]
     });
 
-    this.seoService.setTitle($localize`:@@f74d6f23e06c5a75d95a994017c00191c162ba9f:Test Transactions`);
-    this.ogService.setManualOgImage('tx-push.jpg');
+    // this.seoService.setTitle($localize`:@@f74d6f23e06c5a75d95a994017c00191c162ba9f:Test Transactions`);
+    this.seoService.setTitle('Test Transaction | BTCmempool.org', true);
+    this.seoService.setDescription('Explore the btcmempool.org Test Transactions. See the status of your Bitcoin transactions and network information in real time.');
+    // this.ogService.setManualOgImage('tx-push.jpg');
   }
 
   testTxs() {

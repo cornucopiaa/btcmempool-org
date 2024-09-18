@@ -33,17 +33,23 @@ form {
   width: 62px;
 }
 
+.search-box-container-action {
+  margin-right: auto;
+}
+
 .search-box-container {
   position: relative;
   width: 100%;
   @media (min-width: 768px) {
     min-width: 300px;
+    max-width: 600px;
   }
   @media (min-width: 992px) {
     min-width: 142px;
   }
   @media (min-width: 1200px) {
     min-width: 300px;
+    margin-left: 200px;
   }
   .btn {
     width: 100px;

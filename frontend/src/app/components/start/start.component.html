@@ -12,6 +12,7 @@
 <div *ngIf="countdown > 0" class="warning-label">{{ eventName }} in {{ countdown | number }} block{{ countdown === 1 ? '' : 's' }}!</div>
 
 <h1 class="addition-main-title">Bitcoin Transactions</h1>
+<h2 class="addition-main-subtitle-text">Easily broadcast your Bitcoin transaction to the blockchain using the <b>transaction hash</b> with BTCmempool.org. Monitor Bitcoin <b>mempool unconfirmed transactions</b> in real time, check your <b>position in the mempool</b>, and stay informed about <b>mempool fees</b>, congestion, and network activity. Whether you're tracking mempool <b>Bitcoin transactions</b>, watching mempool size, or exploring mempool news, our platform gives you live insights with an intuitive <b>mempool observer</b>.</h2>
 <div class="blockchain-wrapper" [class.time-ltr]="timeLtr" [class.time-rtl]="!timeLtr" #blockchainWrapper>
   <div id="blockchain-container" [dir]="timeLtr ? 'rtl' : 'ltr'" #blockchainContainer
     [class.with-menu]="hasMenu"

@@ -370,9 +370,16 @@
 <div class="additional-description-main-page container-xl dashboard-container">
   <h4 class="additional-description-main-page__title">Welcome to BTCmempool Explorer</h4>
   <div class="additional-description-main-page__section">
-    <div class="additional-description-main-page__section-content">BTCmempool Explorer is your key resource for understanding and utilizing Bitcoin explorers, including mempool and blockchain explorers. It helps make navigating Bitcoin transactions straightforward, whether you're a seasoned trader or a newcomer.</div>
+    <div class="additional-description-main-page__section-content">BTCmempool is a fast and reliable alternative to other mempool explorers like <b>mempool.space</b>. As your go-to resource for exploring Bitcoin transactions, BTCmempool simplifies the process of understanding and utilizing mempool and blockchain explorers. Whether you're a seasoned trader or new to Bitcoin, our platform ensures a seamless and efficient experience.</div>
     <h5 class="additional-description-main-page__section-title">What is the mempool?</h5>
-    <div class="additional-description-main-page__section-content">The mempool, short for "memory pool," is where all Bitcoin transactions await confirmation. Transactions broadcast to the network but not yet included in a block reside in the mempool, acting as a holding zone until miners pick them up for confirmation and inclusion in the blockchain.</div>
+    <div class="additional-description-main-page__section-content">The mempool, short for "memory pool," is where all Bitcoin transactions await confirmation. Transactions broadcast to the network but not yet included in a block reside in the mempool, acting as a holding zone until miners pick them up for confirmation and inclusion in the <b>blockchain mempool</b>.</div>
+
+    <h5 class="additional-description-main-page__section-title">Can I withdraw Bitcoin from the mempool?</h5>
+    <div class="additional-description-main-page__section-content">Not exactly. The mempool (short for “memory pool”) is a waiting area where unconfirmed Bitcoin transactions sit before being added to a block on the blockchain. If your withdrawal (or any Bitcoin transaction) is still in the mempool, it means it hasn’t been confirmed by miners yet.</div>
+    <div class="additional-description-main-page__section-content">However, if your transaction is stuck in the mempool due to a low fee, you may be able to speed things up using RBF (Replace-By-Fee). RBF is a feature that allows you to resend the same transaction but with a higher fee, giving miners more incentive to confirm it sooner.</div>
+    <div class="additional-description-main-page__section-content">To use RBF, your original transaction must have been marked as RBF-enabled. If it was, you can create a replacement transaction through your wallet interface. If it wasn’t, you may need to wait it out or use another method like Child Pays For Parent (CPFP).
+      So while you can't "withdraw" Bitcoin from the mempool in the traditional sense, you can take action to help it get confirmed faster.
+    </div>
 
     <h5 class="additional-description-main-page__section-title">What happens if my transaction is stuck in the mempool?</h5>
     <div class="additional-description-main-page__section-content">If your transaction is stuck in the mempool, it’s waiting for confirmation, often due to a low transaction fee. You can either wait for it to be processed or use the Replace-by-Fee (RBF) feature to increase the transaction fee, expediting confirmation.</div>
@@ -381,7 +388,7 @@
     <div class="additional-description-main-page__section-content">The mempool size indicates how many transactions are waiting to be confirmed. A larger mempool suggests higher network congestion, leading to longer confirmation times and higher fees as transactions compete for inclusion in the next block.</div>
 
     <h5 class="additional-description-main-page__section-title">What is a mempool explorer and how do I use it?</h5>
-    <div class="additional-description-main-page__section-content">A mempool explorer is a tool for monitoring and analyzing the mempool. It provides insights into the number of pending transactions, their fees, and sizes. To use a mempool explorer, enter your transaction ID to check its status within the mempool, or view overall mempool statistics to gauge network activity and congestion.</div>
+    <div class="additional-description-main-page__section-content">A <b>blockchain mempool</b> explorer is a tool for monitoring and analyzing the mempool. It provides insights into the number of pending transactions, their fees, and sizes. To use a mempool explorer, enter your transaction ID to check its status within the mempool, or view overall mempool statistics to gauge network activity and congestion.</div>
 
     <h5 class="additional-description-main-page__section-title">What can I learn from a mempool explorer?</h5>
     <div class="additional-description-main-page__section-content">A mempool explorer provides detailed information on transaction fees, pending transactions, and estimated confirmation times. This data helps you decide the optimal fee for quicker transaction confirmation and understand network congestion.</div>

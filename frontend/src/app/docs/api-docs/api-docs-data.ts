@@ -9601,6 +9601,13 @@ export const faqData = [
     fragment: "why-do-the-projected-block-fee-ranges-overlap",
     title: "Why do the projected block fee ranges overlap?",
   },
+  {
+    type: "endpoint",
+    category: "advanced",
+    showConditions: bitcoinNetworks,
+    fragment: "can-i-withdraw-bitcoin-from-the-mempool",
+    title: "Can I withdraw Bitcoin from the mempool?",
+  },
   // {
   //   type: "category",
   //   category: "self-hosting",

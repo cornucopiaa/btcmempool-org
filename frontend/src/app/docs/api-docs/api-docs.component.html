@@ -400,6 +400,13 @@
   <p>In extreme cases this can produce several projected blocks in a row with overlapping fee ranges, as a result of each projected block containing both high-feerate high-sigop transactions and lower feerate zero-sigop transactions.</p>
 </ng-template>
 
+<ng-template type="can-i-withdraw-bitcoin-from-the-mempool">
+  <p>Not exactly. The mempool (short for “memory pool”) is a waiting area where unconfirmed Bitcoin transactions sit before being added to a block on the blockchain. If your withdrawal (or any Bitcoin transaction) is still in the mempool, it means it hasn’t been confirmed by miners yet.</p>
+  <p>However, if your transaction is stuck in the mempool due to a low fee, you may be able to speed things up using RBF (Replace-By-Fee). RBF is a feature that allows you to resend the same transaction but with a higher fee, giving miners more incentive to confirm it sooner.</p>
+  <p>To use RBF, your original transaction must have been marked as RBF-enabled. If it was, you can create a replacement transaction through your wallet interface. If it wasn’t, you may need to wait it out or use another method like Child Pays For Parent (CPFP).</p>
+  <p>So while you can't "withdraw" Bitcoin from the mempool in the traditional sense, you can take action to help it get confirmed faster.</p>
+</ng-template>
+
 <ng-template type="who-runs-this-website">
   The official btcmempool.org website is operated by The Mempool Open Source Project. See more information on our <a [routerLink]="['/about']">About page</a>. There are also many unofficial instances of this website operated by individual members of the Bitcoin community.
 </ng-template>

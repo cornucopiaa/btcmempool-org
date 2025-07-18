@@ -40,17 +40,24 @@ form {
 .search-box-container {
   position: relative;
   width: 100%;
-  @media (min-width: 768px) {
-    min-width: 300px;
-    max-width: 600px;
+  min-width: 300px;
+  max-width: 600px;
+  margin-left: 20px;
+  //@media (min-width: 768px) {
+  //  min-width: 300px;
+  //  max-width: 600px;
+  //}
+  //@media (min-width: 992px) {
+  //  min-width: 300px;
+  //}
+  //@media (min-width: 1200px) {
+  //  min-width: 300px;
+  //}
+
+  @media (max-width: 520px) {
+    margin-left: 0;
   }
-  @media (min-width: 992px) {
-    min-width: 142px;
-  }
-  @media (min-width: 1200px) {
-    min-width: 300px;
-    margin-left: 200px;
-  }
+
   .btn {
     width: 100px;
   }
@@ -71,7 +78,6 @@ input:focus {
   display: none;
   align-items: center;
   gap: 5px;
-  padding: 0 20px;
 
   img {
     width: 33px;
@@ -82,4 +88,24 @@ input:focus {
   @media (min-width: 720px) {
     display: flex;
   }
+}
+
+.search-form-wrapper {
+  @media (max-width: 870px) {
+    max-width: 600px;
+  }
+
+  @media (max-width: 1400px) {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    justify-content: flex-end;
+    padding: 10px 0;
+  }
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
 }

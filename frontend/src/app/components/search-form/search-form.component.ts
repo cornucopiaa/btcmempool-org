@@ -45,6 +45,14 @@ export class SearchFormComponent implements OnInit {
   regexDate = getRegex('date');
   regexUnixTimestamp = getRegex('timestamp');
 
+  bitcoinImageSource = `${window.location.protocol}//${window.location.host}/resources/Bitcoin-menu-logo.svg`;
+  ethImageSource = `${window.location.protocol}//${window.location.host}/resources/Ethereum-menu-logo.svg`;
+  moneroImageSource = `${window.location.protocol}//${window.location.host}/resources/Monero-menu-logo.svg`;
+  moneroIconImageSource = `${window.location.protocol}//${window.location.host}/resources/monero-icon.svg`;
+  mempoolIconImageSource = `${window.location.protocol}//${window.location.host}/resources/mempool-icon.svg`;
+  btcFeeIconImageSource = `${window.location.protocol}//${window.location.host}/resources/btc-fee-icon.svg`;
+  btcFeesIconImageSource = `${window.location.protocol}//${window.location.host}/resources/btc-fees-icon-action.svg`;
+
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
@@ -199,7 +207,7 @@ export class SearchFormComponent implements OnInit {
           const otherNetworks = findOtherNetworks(searchText, this.network as any || 'mainnet', this.env);
           const liquidAsset = this.assets ? (this.assets[searchText] || []) : [];
           const pools = this.pools.filter(pool => pool["name"].toLowerCase().includes(searchText.toLowerCase())).slice(0, 10);
-          
+
           if (matchesDateTime && searchText.indexOf('/') !== -1) {
             searchText = searchText.replace(/\//g, '-');
           }

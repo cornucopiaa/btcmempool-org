@@ -62,8 +62,10 @@ export class StatisticsComponent implements OnInit {
   ngOnInit() {
     this.inverted = this.storageService.getValue('inverted-graph') === 'true';
     this.setFeeLevelDropdownData();
-    this.seoService.setTitle($localize`:@@5d4f792f048fcaa6df5948575d7cb325c9393383:Graphs`);
-    this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.mempool:See mempool size (in MvB) and transactions per second (in vB/s) visualized over time.`);
+    // this.seoService.setTitle($localize`:@@5d4f792f048fcaa6df5948575d7cb325c9393383:Graphs`);
+    this.seoService.setTitle('Graphs Dashboard | BTCmempool.org', true);
+    // this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.mempool:See mempool size (in MvB) and transactions per second (in vB/s) visualized over time.`);
+    this.seoService.setDescription('BTCmempool.org provides a graph dashboard showing mempool size (in MvB) and transactions per second (in vB/s), along with pool rankings, pool dominance, block fees, and more.');
     this.stateService.networkChanged$.subscribe((network) => this.network = network);
     this.graphWindowPreference = this.storageService.getValue('graphWindowPreference') ? this.storageService.getValue('graphWindowPreference').trim() : '2h';
     this.outlierCappingEnabled = this.storageService.getValue('cap-outliers') === 'true';
@@ -208,7 +210,7 @@ export class StatisticsComponent implements OnInit {
       }
     });
   }
-  
+
   onOutlierToggleChange(e): void {
     this.outlierCappingEnabled = e.target.checked;
     this.storageService.setValue('cap-outliers', e.target.checked);

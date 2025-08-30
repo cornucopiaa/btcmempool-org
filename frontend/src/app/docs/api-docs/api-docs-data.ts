@@ -9577,8 +9577,8 @@ export const faqData = [
     type: "endpoint",
     category: "advanced",
     showConditions: bitcoinNetworks,
-    fragment: "how-do-mempool-goggles-work",
-    title: "How do Mempool Goggles™ work?",
+    fragment: "how-do-mempool-glasses-work",
+    title: "How do Mempool Glasses work?",
   },
   {
     type: "endpoint",
@@ -9602,45 +9602,52 @@ export const faqData = [
     title: "Why do the projected block fee ranges overlap?",
   },
   {
-    type: "category",
-    category: "self-hosting",
-    fragment: "self-hosting",
-    title: "Self-Hosting",
-    showConditions: bitcoinNetworks
-  },
-  {
     type: "endpoint",
-    category: "self-hosting",
+    category: "advanced",
     showConditions: bitcoinNetworks,
-    fragment: "who-runs-this-website",
-    title: "Who runs this website?",
+    fragment: "can-i-withdraw-bitcoin-from-the-mempool",
+    title: "Can I withdraw Bitcoin from the mempool?",
   },
-  {
-    type: "endpoint",
-    category: "self-hosting",
-    showConditions: bitcoinNetworks,
-    fragment: "host-my-own-instance-raspberry-pi",
-    title: "How can I host my own instance on a Raspberry Pi?",
-  },
-  {
-    type: "endpoint",
-    category: "self-hosting",
-    showConditions: bitcoinNetworks,
-    fragment: "host-my-own-instance-server",
-    title: "How can I host a Mempool instance on my own server?",
-  },
-  {
-    type: "endpoint",
-    category: "self-hosting",
-    showConditions: bitcoinNetworks,
-    fragment: "install-mempool-with-docker",
-    title: "Can I install Mempool using Docker?",
-  },
-  {
-    type: "endpoint",
-    category: "self-hosting",
-    showConditions: bitcoinNetworks,
-    fragment: "address-lookup-issues",
-    title: "Why do I get an error for certain address lookups on my Mempool instance?",
-  }
+  // {
+  //   type: "category",
+  //   category: "self-hosting",
+  //   fragment: "self-hosting",
+  //   title: "Self-Hosting",
+  //   showConditions: bitcoinNetworks
+  // },
+  // {
+  //   type: "endpoint",
+  //   category: "self-hosting",
+  //   showConditions: bitcoinNetworks,
+  //   fragment: "who-runs-this-website",
+  //   title: "Who runs this website?",
+  // },
+  // {
+  //   type: "endpoint",
+  //   category: "self-hosting",
+  //   showConditions: bitcoinNetworks,
+  //   fragment: "host-my-own-instance-raspberry-pi",
+  //   title: "How can I host my own instance on a Raspberry Pi?",
+  // },
+  // {
+  //   type: "endpoint",
+  //   category: "self-hosting",
+  //   showConditions: bitcoinNetworks,
+  //   fragment: "host-my-own-instance-server",
+  //   title: "How can I host a Mempool instance on my own server?",
+  // },
+  // {
+  //   type: "endpoint",
+  //   category: "self-hosting",
+  //   showConditions: bitcoinNetworks,
+  //   fragment: "install-mempool-with-docker",
+  //   title: "Can I install Mempool using Docker?",
+  // },
+  // {
+  //   type: "endpoint",
+  //   category: "self-hosting",
+  //   showConditions: bitcoinNetworks,
+  //   fragment: "address-lookup-issues",
+  //   title: "Why do I get an error for certain address lookups on my Mempool instance?",
+  // }
 ];

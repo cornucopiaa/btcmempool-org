@@ -9,9 +9,9 @@ import { StateService } from './state.service';
 })
 export class SeoService {
   network = '';
-  baseTitle = 'mempool';
+  baseTitle = 'btcmempool';
   baseDescription = 'Explore the full Bitcoin ecosystem&reg; with The Mempool Open Source Project&reg;.';
-  baseDomain = 'mempool.space';
+  baseDomain = 'btcmempool.org';
 
   canonicalLink: HTMLLinkElement = document.getElementById('canonical') as HTMLLinkElement;
 
@@ -47,8 +47,8 @@ export class SeoService {
     });
   }
 
-  setTitle(newTitle: string): void {
-    this.titleService.setTitle(newTitle + ' - ' + this.getTitle());
+  setTitle(newTitle: string, removeAddition?: boolean): void {
+    this.titleService.setTitle(newTitle + (removeAddition ? '' : ` ${this.getTitle()}`));
     this.metaService.updateTag({ property: 'og:title', content: newTitle});
     this.metaService.updateTag({ name: 'twitter:title', content: newTitle});
     this.metaService.updateTag({ property: 'og:meta:ready', content: 'ready'});

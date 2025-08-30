@@ -95,7 +95,7 @@ footer .row.social-links {
   display: flex;
   flex-wrap: wrap;
   width: fit-content;
-  margin: 0 auto; 
+  margin: 0 auto;
 
   @media (max-width: 450px){
     width: 250px;
@@ -333,4 +333,9 @@ footer .nowrap {
 .beta-network {
   font-size: 8px;
   margin-left: 1em;
+}
+
+footer .footer-link-text {
+  max-width: 200px;
+  display: inline-block;
 }

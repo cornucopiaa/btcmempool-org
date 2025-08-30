@@ -3,7 +3,7 @@
   <div class="row row-cols-1 row-cols-md-2" *ngIf="{ value: (mempoolInfoData$ | async) } as mempoolInfoData">
     <ng-container>
       <div class="col card-wrapper">
-        <div class="main-title" i18n="fees-box.transaction-fees">Transaction Fees</div>
+        <div class="main-title" i18n="fees-box.transaction-fees">Bitcoin Transaction Fees</div>
         <div class="card">
           <div class="card-body less-padding">
             <app-fees-box class="d-block"></app-fees-box>
@@ -18,7 +18,7 @@
       <div class="card graph-card">
         <div class="card-body pl-lg-3 pr-lg-3 pl-2 pr-2">
           <a class="title-link mb-0" style="margin-top: -2px" href="" [routerLink]="['/mempool-block/0' | relativeUrl]">
-            <h5 class="card-title d-inline"><span>Mempool Goggles&trade;</span> : {{ goggleCycle[goggleIndex].name }}</h5>
+            <h5 class="card-title d-inline"><span>Mempool Glasses</span> : {{ goggleCycle[goggleIndex].name }}</h5>
             <span>&nbsp;</span>
             <fa-icon [icon]="['fas', 'external-link-alt']" [fixedWidth]="true" style="vertical-align: text-top; font-size: 13px; color: var(--title-fg)"></fa-icon>
           </a>
@@ -178,7 +178,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col">
         <div class="card-liquid card">
           <h5 class="card-title" style="padding-top: 20px;" i18n="dashboard.lbtc-supply-against-btc-holdings">L-BTC Supply Against BTC Holdings</h5>
@@ -187,9 +187,9 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card"> 
+        <div class="card-liquid card">
           <div class="card-body">
             <app-reserves-ratio-stats [fullHistory$]="fullHistory$" [emergencyUtxosStats$]="emergencySpentUtxosStats$"></app-reserves-ratio-stats>
             <app-reserves-ratio [currentPeg]="currentPeg$ | async" [currentReserves]="currentReserves$ | async"></app-reserves-ratio>
@@ -318,7 +318,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col">
         <div class="card-liquid card">
           <h5 class="card-title" style="padding-top: 20px;" i18n="dashboard.lbtc-supply-against-btc-holdings">L-BTC Supply Against BTC Holdings</h5>
@@ -327,9 +327,9 @@
           </div>
         </div>
       </div>
-  
+
       <div class="col" style="margin-bottom: 1.47rem">
-        <div class="card-liquid card"> 
+        <div class="card-liquid card">
           <div class="card-body">
             <app-reserves-ratio-stats></app-reserves-ratio-stats>
             <app-reserves-ratio></app-reserves-ratio>
@@ -366,3 +366,45 @@
     </div>
   </ng-container>
 </ng-template>
+
+<div class="additional-description-main-page container-xl dashboard-container">
+  <h4 class="additional-description-main-page__title">Welcome to BTCmempool Explorer</h4>
+  <div class="additional-description-main-page__section">
+    <div class="additional-description-main-page__section-content">BTCmempool is a fast and reliable alternative to other mempool explorers like <b>mempool.space</b>. As your go-to resource for exploring Bitcoin transactions, BTCmempool simplifies the process of understanding and utilizing mempool and blockchain explorers. Whether you're a seasoned trader or new to Bitcoin, our platform ensures a seamless and efficient experience.</div>
+    <h5 class="additional-description-main-page__section-title">What is the mempool?</h5>
+    <div class="additional-description-main-page__section-content">The mempool, short for "memory pool," is where all Bitcoin transactions await confirmation. Transactions broadcast to the network but not yet included in a block reside in the mempool, acting as a holding zone until miners pick them up for confirmation and inclusion in the <b>blockchain mempool</b>.</div>
+
+    <h5 class="additional-description-main-page__section-title">Can I withdraw Bitcoin from the mempool?</h5>
+    <div class="additional-description-main-page__section-content">Not exactly. The mempool (short for “memory pool”) is a waiting area where unconfirmed Bitcoin transactions sit before being added to a block on the blockchain. If your withdrawal (or any Bitcoin transaction) is still in the mempool, it means it hasn’t been confirmed by miners yet.</div>
+    <div class="additional-description-main-page__section-content">However, if your transaction is stuck in the mempool due to a low fee, you may be able to speed things up using RBF (Replace-By-Fee). RBF is a feature that allows you to resend the same transaction but with a higher fee, giving miners more incentive to confirm it sooner.</div>
+    <div class="additional-description-main-page__section-content">To use RBF, your original transaction must have been marked as RBF-enabled. If it was, you can create a replacement transaction through your wallet interface. If it wasn’t, you may need to wait it out or use another method like Child Pays For Parent (CPFP).
+      So while you can't "withdraw" Bitcoin from the mempool in the traditional sense, you can take action to help it get confirmed faster.
+    </div>
+
+    <h5 class="additional-description-main-page__section-title">What happens if my transaction is stuck in the mempool?</h5>
+    <div class="additional-description-main-page__section-content">If your transaction is stuck in the mempool, it’s waiting for confirmation, often due to a low transaction fee. You can either wait for it to be processed or use the <a [routerLink]="['/rbf']">Replace-by-Fee (RBF)</a> feature to increase the transaction fee, expediting confirmation.</div>
+
+    <h5 class="additional-description-main-page__section-title">Why is the size of the mempool important?</h5>
+    <div class="additional-description-main-page__section-content">The <a [routerLink]="['/graphs/mempool']">Mempool size</a> indicates how many transactions are waiting to be confirmed. A <a [routerLink]="['/graphs/mining/block-sizes-weights']" class="footer-link-text">Larger mempool suggests higher network congestion</a>, leading to longer confirmation times and higher fees as transactions compete for inclusion in the <a [routerLink]="['/mempool-block/0']">Next block</a>.</div>
+
+    <h5 class="additional-description-main-page__section-title">What is a mempool explorer and how do I use it?</h5>
+    <div class="additional-description-main-page__section-content">A <b>blockchain mempool</b> explorer is a tool for monitoring and analyzing the mempool. It provides insights into the number of pending transactions, their fees, and sizes. To use a mempool explorer, enter your transaction ID to check its status within the mempool, or view overall mempool statistics to gauge network activity and congestion.</div>
+
+    <h5 class="additional-description-main-page__section-title">What can I learn from a mempool explorer?</h5>
+    <div class="additional-description-main-page__section-content">A mempool explorer provides detailed information on transaction fees, pending transactions, and estimated confirmation times. This data helps you decide the optimal fee for quicker transaction confirmation and understand network congestion.</div>
+
+    <h5 class="additional-description-main-page__section-title">What is a Bitcoin explorer and how do I use it?</h5>
+    <div class="additional-description-main-page__section-content">A Bitcoin explorer, or blockchain explorer, is a web tool that allows you to navigate the Bitcoin blockchain. It provides comprehensive details on Bitcoin transactions, blocks, and addresses. To use a Bitcoin explorer, enter the transaction ID, address, or block number into the search bar. The explorer will display detailed information related to your query.</div>
+
+    <h5 class="additional-description-main-page__section-title">How long does a Bitcoin transfer take?</h5>
+    <div class="additional-description-main-page__section-content">The duration of a Bitcoin transfer typically ranges from 10 minutes to an hour. This timeframe depends on factors such as network congestion and transaction fees. Each block in the Bitcoin blockchain is mined approximately every 10 minutes, and most transactions are considered secure after six confirmations, which takes around 60 minutes.</div>
+    <div class="additional-description-main-page__section-content">When the network is congested, transactions can take longer to confirm. During such periods, higher transaction fees can expedite the process, as miners prioritize transactions with higher fees. Conversely, transactions with lower fees might remain unconfirmed for a longer duration, sometimes extending to several hours.</div>
+    <div class="additional-description-main-page__section-content">The Bitcoin mempool, which holds unconfirmed transactions, plays a crucial role in determining transaction times. As the mempool fills up, transactions with lower fees may be delayed until there is less congestion. Generally, Bitcoin can process about five transactions per second, and delays occur when the volume of transactions exceeds this capacity.</div>
+
+    <h5 class="additional-description-main-page__section-title">What are virtual bytes (vB) and weight units (WU)?</h5>
+    <div class="additional-description-main-page__section-content">Virtual bytes (vB) and weight units (WU) measure the size of transactions and blocks on the Bitcoin network. A transaction's size depends on technical factors like the number of inputs, outputs, signatures, and its format (legacy, SegWit, etc.). Bigger transactions consume more space and therefore pay higher <a [routerLink]="['/mining']">Mining fees</a>. Block sizes are capped at 4,000,000 WU (or 1,000,000 vB, since 1 vB equals 4 WU). This system, introduced with the SegWit upgrade in 2017, ensures backward compatibility while efficiently measuring transaction and block sizes.</div>
+
+    <h5 class="additional-description-main-page__section-title">What is sat/vB and how does it affect transaction priority?</h5>
+    <div class="additional-description-main-page__section-content">The priority of a Bitcoin transaction is determined by its feerate, measured in satoshis per virtual byte (sat/vB). Higher feerates generally result in faster confirmations. As feerates fluctuate, it's crucial to check current rates before making a transaction to avoid delays. BTCmempool Explorer provides a comprehensive resource for exploring the Bitcoin network. From tracking transactions to analyzing the mempool and diving into blockchain details, our tools and information simplify your Bitcoin journey.</div>
+  </div>
+</div>

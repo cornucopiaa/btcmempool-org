@@ -1,13 +1,24 @@
 <form [class]="{hamburgerOpen: hamburgerOpen}" [formGroup]="searchForm" (submit)="searchForm.valid && search()" novalidate>
-  <div class="d-flex">
-    <div class="search-box-container mr-2">
-      <input #searchInput (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)" formControlName="searchText" type="text" class="form-control" i18n-placeholder="search-form.searchbar-placeholder" placeholder="Explore the full Bitcoin ecosystem">
-      <app-search-results #searchResults [hidden]="dropdownHidden" [results]="typeAhead$ | async" (selectedResult)="selectedResult($event)"></app-search-results>
+  <div class="d-flex search-form-wrapper">
+    <div class="search-input-wrapper">
+      <div class="search-box-container mr-2">
+        <input #searchInput (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)" formControlName="searchText" type="text" class="form-control" i18n-placeholder="search-form.searchbar-placeholder" placeholder="Explore the entire ecosystem of Bitcoin">
+        <app-search-results #searchResults [hidden]="dropdownHidden" [results]="typeAhead$ | async" (selectedResult)="selectedResult($event)"></app-search-results>
+      </div>
+      <div class="search-box-container-action">
+        <button [disabled]="isSearching" type="submit" class="btn btn-block btn-purple">
+          <fa-icon *ngIf="!(isTypeaheading$ | async) else searchLoading" [icon]="['fas', 'search']" [fixedWidth]="true" i18n-title="search-form.search-title" title="Search"></fa-icon>
+        </button>
+      </div>
     </div>
-    <div>
-      <button [disabled]="isSearching" type="submit" class="btn btn-block btn-purple">
-        <fa-icon *ngIf="!(isTypeaheading$ | async) else searchLoading" [icon]="['fas', 'search']" [fixedWidth]="true" i18n-title="search-form.search-title" title="Search"></fa-icon>
-      </button>
+    <div class="logo-links-block logo-links-block__search">
+      <a href="https://btcscan.org/" target="_blank"><img [src]="bitcoinImageSource" alt="bitcoin logo"></a>
+      <a href="https://ethscan.org/" target="_blank"><img [src]="ethImageSource" alt="ethereum logo"></a>
+      <a href="https://xmrscan.org/" target="_blank"><img [src]="moneroImageSource" alt="monero logo"></a>
+      <a href="https://moneroexplorer.org/" target="_blank"><img [src]="moneroIconImageSource" alt="monero logo"></a>
+      <a href="https://btcmempool.org/" target="_blank"><img [src]="mempoolIconImageSource" alt="monero logo"></a>
+      <a href="https://btcfee.org/" target="_blank"><img [src]="btcFeeIconImageSource" alt="monero logo"></a>
+      <a href="https://btcfees.org/" target="_blank"><img [src]="btcFeesIconImageSource" alt="monero logo"></a>
     </div>
   </div>
 </form>

@@ -1004,6 +1004,13 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  getTotalOutputValue(): number {
+    if (!this.tx || !this.tx.vout) {
+      return 0;
+    }
+    return this.tx.vout.reduce((sum, output) => sum + (output.value || 0), 0);
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.fetchCpfpSubscription.unsubscribe();

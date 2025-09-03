@@ -95,6 +95,7 @@ class AddressStats implements ChainStats {
   styleUrls: ['./address.component.scss']
 })
 export class AddressComponent implements OnInit, OnDestroy {
+  Math = Math; // Make Math available in template
   network = '';
 
   isMobile: boolean;

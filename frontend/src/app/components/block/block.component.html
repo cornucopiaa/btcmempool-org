@@ -34,6 +34,15 @@
 
   <div class="clearfix"></div>
 
+  <!-- SEO Text Summary -->
+  <div class="box seo-summary" *ngIf="!error && block && !isLoadingBlock">
+    <p class="text-muted">
+      Block {{ blockHeight | number }} was mined on {{ block.timestamp * 1000 | date:'MMMM d, yyyy \'at\' h:mm a' }} and contains {{ block.tx_count | number }} transactions with a total size of {{ (block.size / 1000000) | number:'1.2-2' }} MB. 
+      The block was mined by {{ block.extras?.pool?.name || 'an unknown miner' }} with a median transaction fee of approximately {{ block.extras?.medianFee | number:'1.0-0' }} sat/vB. 
+      Total fees in this block amounted to {{ (block.extras?.totalFees || 0) / 100000000 | number:'1.2-8' }} BTC with a subsidy of {{ blockSubsidy | number:'1.2-8' }} BTC, resulting in a total block reward of {{ (block.extras?.reward || 0) / 100000000 | number:'1.2-8' }} BTC.
+    </p>
+  </div>
+
   <div class="box" *ngIf="!error">
     <div class="row">
       <div class="col-sm">

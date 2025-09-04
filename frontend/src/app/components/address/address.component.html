@@ -16,6 +16,26 @@
 
   <div class="clearfix"></div>
 
+  <!-- SEO Text Summary -->
+  <ng-template [ngIf]="!isLoadingAddress && !error && address">
+    <div class="box seo-summary">
+      <p class="text-muted">
+        This Bitcoin address {{ addressString.substring(0, 8) }}...{{ addressString.substring(addressString.length - 8) }} has a confirmed balance of {{ chainStats.balance / 100000000 | number:'1.2-8' }} BTC 
+        @if (mempoolStats.balance !== 0) {
+          with an additional unconfirmed balance of {{ mempoolStats.balance / 100000000 | number:'1.2-8' }} BTC pending in the mempool
+        }. 
+        The address has received a total of {{ chainStats.totalReceived / 100000000 | number:'1.2-8' }} BTC across {{ chainStats.tx_count | number }} confirmed transaction{{ chainStats.tx_count !== 1 ? 's' : '' }} 
+        @if (mempoolStats.tx_count > 0) {
+          and {{ mempoolStats.tx_count | number }} unconfirmed transaction{{ mempoolStats.tx_count !== 1 ? 's' : '' }}
+        }. 
+        It currently holds {{ chainStats.utxos | number }} confirmed UTXO{{ chainStats.utxos !== 1 ? 's' : '' }}
+        @if (mempoolStats.utxos !== 0) {
+          and {{ Math.abs(mempoolStats.utxos) | number }} unconfirmed UTXO{{ mempoolStats.utxos !== 1 && mempoolStats.utxos !== -1 ? 's' : '' }}
+        }.
+      </p>
+    </div>
+  </ng-template>
+
   <ng-template [ngIf]="!isLoadingAddress && !error">
     <div class="box">
 

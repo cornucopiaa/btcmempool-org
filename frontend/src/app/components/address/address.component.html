@@ -19,7 +19,7 @@
   <!-- SEO Text Summary -->
   <ng-template [ngIf]="!isLoadingAddress && !error && address">
     <div class="box seo-summary">
-      <p class="text-muted" i18n="address.seo-summary|SEO summary text for address page">
+      <p class="text-muted">
         This Bitcoin address {{ addressString.substring(0, 8) }}...{{ addressString.substring(addressString.length - 8) }} has a confirmed balance of {{ chainStats.balance / 100000000 | number:'1.2-8' }} BTC 
         @if (mempoolStats.balance !== 0) {
           with an additional unconfirmed balance of {{ mempoolStats.balance / 100000000 | number:'1.2-8' }} BTC pending in the mempool

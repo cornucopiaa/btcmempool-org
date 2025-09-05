@@ -313,7 +313,7 @@
                 }
               ],
               "sourceMap": false,
-              "localize": true,
+              "localize": false,
               "optimization": false
             }
           }

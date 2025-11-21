@@ -6,6 +6,7 @@ import { WebsocketService } from '../../services/websocket.service';
 import { MempoolInfo, Recommendedfees } from '../../interfaces/websocket.interface';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url/relative-url.pipe';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-clock',
@@ -47,6 +48,7 @@ export class ClockComponent implements OnInit {
     private router: Router,
     private relativeUrlPipe: RelativeUrlPipe,
     private cd: ChangeDetectorRef,
+    private seoService: SeoService,
   ) {
     this.route.queryParams.subscribe((params) => {
       this.hideStats = params && params.stats === 'false';
@@ -87,6 +89,14 @@ export class ClockComponent implements OnInit {
       tap((page: { mode: 'mempool' | 'mined', index: number }) => {
         this.mode = page.mode;
         this.blockIndex = page.index || 0;
+
+        // Set page title based on mode
+        if (page.mode === 'mempool') {
+          this.seoService.setTitle('Mempool Block Clock');
+        } else {
+          this.seoService.setTitle('Mined Block Clock');
+        }
+
         if (this.blocks[this.blockIndex]) {
           this.blockStyle = this.getStyleForBlock(this.blocks[this.blockIndex]);
           this.cd.markForCheck();

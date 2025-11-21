@@ -96,12 +96,10 @@ input:focus {
 }
 
 .logo-links-block__search {
-  @media (min-width: 720px) {
-    display: flex;
-  }
+  display: flex;
 
-  @media (max-width: 719px) {
-    display: none;
+  @media (max-width: 767.98px) {
+    display: none !important;
   }
 }
 

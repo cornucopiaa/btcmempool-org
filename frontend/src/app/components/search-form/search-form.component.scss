@@ -75,18 +75,33 @@ input:focus {
 }
 
 .logo-links-block {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 5px;
 
+  a {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
   img {
     width: 33px;
+    display: block;
   }
 }
 
 .logo-links-block__search {
   @media (min-width: 720px) {
     display: flex;
+  }
+
+  @media (max-width: 719px) {
+    display: none;
   }
 }
 

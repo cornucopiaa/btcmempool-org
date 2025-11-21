@@ -32,6 +32,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   servicesEnabled = false;
   menuOpen = false;
   isDropdownVisible: boolean;
+  explorersMenuOpen = false;
 
   enterpriseInfo: any;
   enterpriseInfo$: Subscription;
@@ -40,7 +41,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   ethImageSource = `${window.location.protocol}//${window.location.host}/resources/Ethereum-menu-logo.svg`;
   moneroImageSource = `${window.location.protocol}//${window.location.host}/resources/Monero-menu-logo.svg`;
   moneroIconImageSource = `${window.location.protocol}//${window.location.host}/resources/monero-icon.svg`;
-  mempoolIconImageSource = `${window.location.protocol}//${window.location.host}/resources/mempool-icon.svg`;
+  mempoolIconImageSource = `${window.location.protocol}//${window.location.host}/resources/icon-mempool-logo.png`;
   btcFeeIconImageSource = `${window.location.protocol}//${window.location.host}/resources/btc-fee-icon.svg`;
   btcFeesIconImageSource = `${window.location.protocol}//${window.location.host}/resources/btc-fees-icon-action.svg`;
 
@@ -133,6 +134,10 @@ export class MasterPageComponent implements OnInit, OnDestroy {
 
   menuToggled(isOpen: boolean): void {
     this.menuOpen = isOpen;
+  }
+
+  toggleExplorersMenu(): void {
+    this.explorersMenuOpen = !this.explorersMenuOpen;
   }
 
   ngOnDestroy(): void {

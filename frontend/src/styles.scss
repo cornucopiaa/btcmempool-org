@@ -1313,3 +1313,21 @@ a {
   background-color: var(--primary);
   border-color: var(--primary);
 }
+
+/* Right-aligned icons hover effect */
+.float-right, .justify-content-end {
+  fa-icon {
+    transition: transform 0.2s ease-in-out;
+    display: inline-block;
+
+    @media (min-width: 768px) {
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      display: none !important;
+    }
+  }
+}

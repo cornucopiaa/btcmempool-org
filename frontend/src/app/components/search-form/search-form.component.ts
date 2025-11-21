@@ -4,7 +4,7 @@ import { EventType, NavigationStart, Router } from '@angular/router';
 import { AssetsService } from '../../services/assets.service';
 import { Env, StateService } from '../../services/state.service';
 import { Observable, of, Subject, zip, BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, catchError, map, startWith,  tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, catchError, map, startWith, tap } from 'rxjs/operators';
 import { ElectrsApiService } from '../../services/electrs-api.service';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url/relative-url.pipe';
 import { ApiService } from '../../services/api.service';
@@ -49,7 +49,7 @@ export class SearchFormComponent implements OnInit {
   ethImageSource = `${window.location.protocol}//${window.location.host}/resources/Ethereum-menu-logo.svg`;
   moneroImageSource = `${window.location.protocol}//${window.location.host}/resources/Monero-menu-logo.svg`;
   moneroIconImageSource = `${window.location.protocol}//${window.location.host}/resources/monero-icon.svg`;
-  mempoolIconImageSource = `${window.location.protocol}//${window.location.host}/resources/mempool-icon.svg`;
+  mempoolIconImageSource = `${window.location.protocol}//${window.location.host}/resources/icon-mempool-logo.png`;
   btcFeeIconImageSource = `${window.location.protocol}//${window.location.host}/resources/btc-fee-icon.svg`;
   btcFeesIconImageSource = `${window.location.protocol}//${window.location.host}/resources/btc-fees-icon-action.svg`;
 
@@ -111,15 +111,15 @@ export class SearchFormComponent implements OnInit {
     }
 
     const searchText$ = this.searchForm.get('searchText').valueChanges
-    .pipe(
-      map((text) => {
-        return text.trim();
-      }),
-      tap((text) => {
-        this.stateService.searchText$.next(text);
-      }),
-      distinctUntilChanged(),
-    );
+      .pipe(
+        map((text) => {
+          return text.trim();
+        }),
+        tap((text) => {
+          this.stateService.searchText$.next(text);
+        }),
+        distinctUntilChanged(),
+      );
 
     const searchResults$ = searchText$.pipe(
       debounceTime(200),
@@ -160,81 +160,81 @@ export class SearchFormComponent implements OnInit {
       [
         searchText$,
         searchResults$.pipe(
-        startWith([
-          [],
-          {
-            nodes: [],
-            channels: [],
-          },
-          this.pools
-        ]))
-      ]
-      ).pipe(
-        map((latestData) => {
-          this.pools = latestData[1][2] || [];
-
-          let searchText = latestData[0];
-          if (!searchText.length) {
-            return {
-              searchText: '',
-              hashQuickMatch: false,
-              blockHeight: false,
-              txId: false,
-              address: false,
-              otherNetworks: [],
-              addresses: [],
+          startWith([
+            [],
+            {
               nodes: [],
               channels: [],
-              liquidAsset: [],
-              pools: []
-            };
-          }
+            },
+            this.pools
+          ]))
+      ]
+    ).pipe(
+      map((latestData) => {
+        this.pools = latestData[1][2] || [];
 
-          const result = latestData[1];
-          const addressPrefixSearchResults = result[0];
-          const lightningResults = result[1];
-
-          // Do not show date and timestamp results for liquid
-          const isNetworkBitcoin = this.network === '' || this.network === 'testnet' || this.network === 'testnet4' || this.network === 'signet';
-
-          const matchesBlockHeight = this.regexBlockheight.test(searchText) && parseInt(searchText) <= this.stateService.latestBlockHeight;
-          const matchesDateTime = this.regexDate.test(searchText) && new Date(searchText).toString() !== 'Invalid Date' && new Date(searchText).getTime() <= Date.now() && isNetworkBitcoin;
-          const matchesUnixTimestamp = this.regexUnixTimestamp.test(searchText) && parseInt(searchText) <= Math.floor(Date.now() / 1000) && isNetworkBitcoin;
-          const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
-          const matchesBlockHash = this.regexBlockhash.test(searchText);
-          const matchesAddress = !matchesTxId && this.regexAddress.test(searchText);
-          const publicKey = matchesAddress && searchText.startsWith('0');
-          const otherNetworks = findOtherNetworks(searchText, this.network as any || 'mainnet', this.env);
-          const liquidAsset = this.assets ? (this.assets[searchText] || []) : [];
-          const pools = this.pools.filter(pool => pool["name"].toLowerCase().includes(searchText.toLowerCase())).slice(0, 10);
-
-          if (matchesDateTime && searchText.indexOf('/') !== -1) {
-            searchText = searchText.replace(/\//g, '-');
-          }
-
-          if (publicKey) {
-            otherNetworks.length = 0;
-          }
-
+        let searchText = latestData[0];
+        if (!searchText.length) {
           return {
-            searchText: searchText,
-            hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress || matchesUnixTimestamp || matchesDateTime),
-            blockHeight: matchesBlockHeight,
-            dateTime: matchesDateTime,
-            unixTimestamp: matchesUnixTimestamp,
-            txId: matchesTxId,
-            blockHash: matchesBlockHash,
-            address: matchesAddress,
-            publicKey: publicKey,
-            addresses: matchesAddress && addressPrefixSearchResults.length === 1 && searchText === addressPrefixSearchResults[0] ? [] : addressPrefixSearchResults, // If there is only one address and it matches the search text, don't show it in the dropdown
-            otherNetworks: otherNetworks,
-            nodes: lightningResults.nodes,
-            channels: lightningResults.channels,
-            liquidAsset: liquidAsset,
-            pools: pools
+            searchText: '',
+            hashQuickMatch: false,
+            blockHeight: false,
+            txId: false,
+            address: false,
+            otherNetworks: [],
+            addresses: [],
+            nodes: [],
+            channels: [],
+            liquidAsset: [],
+            pools: []
           };
-        })
-      );
+        }
+
+        const result = latestData[1];
+        const addressPrefixSearchResults = result[0];
+        const lightningResults = result[1];
+
+        // Do not show date and timestamp results for liquid
+        const isNetworkBitcoin = this.network === '' || this.network === 'testnet' || this.network === 'testnet4' || this.network === 'signet';
+
+        const matchesBlockHeight = this.regexBlockheight.test(searchText) && parseInt(searchText) <= this.stateService.latestBlockHeight;
+        const matchesDateTime = this.regexDate.test(searchText) && new Date(searchText).toString() !== 'Invalid Date' && new Date(searchText).getTime() <= Date.now() && isNetworkBitcoin;
+        const matchesUnixTimestamp = this.regexUnixTimestamp.test(searchText) && parseInt(searchText) <= Math.floor(Date.now() / 1000) && isNetworkBitcoin;
+        const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
+        const matchesBlockHash = this.regexBlockhash.test(searchText);
+        const matchesAddress = !matchesTxId && this.regexAddress.test(searchText);
+        const publicKey = matchesAddress && searchText.startsWith('0');
+        const otherNetworks = findOtherNetworks(searchText, this.network as any || 'mainnet', this.env);
+        const liquidAsset = this.assets ? (this.assets[searchText] || []) : [];
+        const pools = this.pools.filter(pool => pool["name"].toLowerCase().includes(searchText.toLowerCase())).slice(0, 10);
+
+        if (matchesDateTime && searchText.indexOf('/') !== -1) {
+          searchText = searchText.replace(/\//g, '-');
+        }
+
+        if (publicKey) {
+          otherNetworks.length = 0;
+        }
+
+        return {
+          searchText: searchText,
+          hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress || matchesUnixTimestamp || matchesDateTime),
+          blockHeight: matchesBlockHeight,
+          dateTime: matchesDateTime,
+          unixTimestamp: matchesUnixTimestamp,
+          txId: matchesTxId,
+          blockHash: matchesBlockHash,
+          address: matchesAddress,
+          publicKey: publicKey,
+          addresses: matchesAddress && addressPrefixSearchResults.length === 1 && searchText === addressPrefixSearchResults[0] ? [] : addressPrefixSearchResults, // If there is only one address and it matches the search text, don't show it in the dropdown
+          otherNetworks: otherNetworks,
+          nodes: lightningResults.nodes,
+          channels: lightningResults.channels,
+          liquidAsset: liquidAsset,
+          pools: pools
+        };
+      })
+    );
   }
 
   handleKeyDown($event): void {

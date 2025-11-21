@@ -42,21 +42,7 @@ class Server {
     this.secureMempoolHost = config.MEMPOOL.HTTP_HOST.startsWith('https');
     this.network = config.MEMPOOL.NETWORK || 'bitcoin';
 
-    let canonical;
-    switch(config.MEMPOOL.NETWORK) {
-      case "liquid":
-        canonical = "https://liquid.network"
-        break;
-      case "bisq":
-        canonical = "https://bisq.markets"
-        break;
-      case "onbtc":
-        canonical = "https://bitcoin.gob.sv"
-        break;
-      default:
-        canonical = "https://mempool.space"
-    }
-    this.canonicalHost = canonical;
+    this.canonicalHost = config.SERVER.HOST;
 
     this.startServer();
 

@@ -76,11 +76,58 @@
 <!--    </div>-->
 <!--  </div>-->
 
-  <div class="logo-links-block logo-links-block__nav">
+  <!-- 4 Icons - Desktop only -->
+  <div class="logo-links-block logo-links-block__nav logo-links-desktop">
     <a href="https://btcscan.org/" target="_blank"><img [src]="bitcoinImageSource" alt="bitcoin logo"></a>
     <a href="https://ethscan.org/" target="_blank"><img [src]="ethImageSource" alt="ethereum logo"></a>
     <a href="https://xmrscan.org/" target="_blank"><img [src]="moneroImageSource" alt="monero logo"></a>
     <a href="https://btcmempool.org/" target="_blank"><img [src]="mempoolIconImageSource" alt="monero logo"></a>
+  </div>
+
+  <!-- Explorers Menu - Mobile only (replaces 4 icons) -->
+  <div class="explorers-menu-container explorers-menu-mobile">
+    <button class="explorers-hamburger-btn" (click)="toggleExplorersMenu()" [attr.aria-expanded]="explorersMenuOpen">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <div class="explorers-dropdown" [class.open]="explorersMenuOpen">
+      <div class="explorers-overlay" (click)="toggleExplorersMenu()"></div>
+      <div class="explorers-content">
+        <h2 class="explorers-title">Explorers</h2>
+        <nav class="explorers-list">
+          <a href="https://btcscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="bitcoinImageSource" alt="Bitcoin logo">
+            <span class="explorer-name">BTC Explorer</span>
+          </a>
+          <a href="https://ethscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="ethImageSource" alt="Ethereum logo">
+            <span class="explorer-name">ETH Explorer</span>
+          </a>
+          <a href="https://xmrscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="moneroImageSource" alt="Monero logo">
+            <span class="explorer-name">XMR Explorer</span>
+          </a>
+          <a href="https://moneroexplorer.org/#/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="moneroIconImageSource" alt="Monero logo">
+            <span class="explorer-name">Monero Explorer</span>
+          </a>
+          <a href="https://btcmempool.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="mempoolIconImageSource" alt="BTC Mempool logo">
+            <span class="explorer-name">BTC Mempool</span>
+          </a>
+          <a href="https://btcfee.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="btcFeeIconImageSource" alt="BTC Fee logo">
+            <span class="explorer-name">BTC Fee</span>
+          </a>
+          <a href="https://btcfees.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="btcFeesIconImageSource" alt="BTC Fees logo">
+            <span class="explorer-name">BTC Fees</span>
+          </a>
+        </nav>
+      </div>
+    </div>
   </div>
 
   <div class="navbar-collapse" id="navbarCollapse">
@@ -120,8 +167,8 @@
     </ul>
     <app-search-form [hamburgerOpen]="enterpriseInfo === null && user != null" class="search-form-container" location="top" (searchTriggered)="collapse()"></app-search-form>
 
-    <!-- Explorers Hamburger Menu -->
-    <div class="explorers-menu-container">
+    <!-- Explorers Hamburger Menu - Desktop only -->
+    <div class="explorers-menu-container explorers-menu-desktop">
       <button class="explorers-hamburger-btn" (click)="toggleExplorersMenu()" [attr.aria-expanded]="explorersMenuOpen">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>

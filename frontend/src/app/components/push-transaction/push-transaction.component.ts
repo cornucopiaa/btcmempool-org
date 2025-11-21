@@ -36,7 +36,7 @@ export class PushTransactionComponent implements OnInit {
     });
 
     // this.seoService.setTitle($localize`:@@meta.title.push-tx:Broadcast Transaction`);
-    this.seoService.setTitle('Broadcast Transaction | BTCmempool.org', true);
+    this.seoService.setTitle('Broadcast Transaction');
     // this.seoService.setDescription($localize`:@@meta.description.push-tx:Broadcast a transaction to the ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} network using the transaction's hash.`);
     this.seoService.setDescription(`Use BTCmempool.org to broadcast your transaction to the ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} network using the transaction hash.`);
     // this.ogService.setManualOgImage('tx-push.jpg');

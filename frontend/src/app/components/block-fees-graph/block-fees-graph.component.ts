@@ -66,7 +66,7 @@ export class BlockFeesGraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.seoService.setTitle('Block Fees - Bitcoin Mining Pools | BTCmempool.org', true);
+    this.seoService.setTitle('Block Fees - Bitcoin Mining Pools');
     // this.seoService.setTitle($localize`:@@6c453b11fd7bd159ae30bc381f367bc736d86909:Block Fees`);
     this.seoService.setDescription('Visualize average mining fees per Bitcoin block in BTC and USD over time.');
     // this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.block-fees:See the average mining fees earned per Bitcoin block visualized in BTC and USD over time.`);

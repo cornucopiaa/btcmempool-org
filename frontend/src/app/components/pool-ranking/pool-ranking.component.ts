@@ -57,7 +57,7 @@ export class PoolRankingComponent implements OnInit {
       this.miningWindowPreference = '1w';
     } else {
       // this.seoService.setTitle($localize`:@@mining.mining-pools:Mining Pools`);
-      this.seoService.setTitle('Mining Pools | BTCmempool.org', true);
+      this.seoService.setTitle('Mining Pools');
       // this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.pool-ranking:See the top Bitcoin mining pools ranked by number of blocks mined, over your desired timeframe.`);
       this.seoService.setDescription('View the top Bitcoin mining pools, including Binance and Foundry USA, ranked by the number of blocks mined over your chosen timeframe.');
       this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');

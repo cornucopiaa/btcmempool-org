@@ -258,7 +258,7 @@ export class BlockComponent implements OnInit, OnDestroy {
         this.setNextAndPreviousBlockLink();
 
         // this.seoService.setTitle($localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`);
-        this.seoService.setTitle(`Bitcoin Block ${block.height} | BTCmempool.org`, true);
+        this.seoService.setTitle(`Bitcoin Block ${block.height}`);
         // if( this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
         //   this.seoService.setDescription($localize`:@@meta.description.liquid.block:See size, weight, fee range, included transactions, and more for Liquid${seoDescriptionNetwork(this.stateService.network)} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`);
         // } else {

@@ -72,7 +72,7 @@ export class HashrateChartPoolsComponent implements OnInit {
     let firstRun = true;
 
     // this.seoService.setTitle($localize`:@@mining.pools-historical-dominance:Pools Historical Dominance`);
-    this.seoService.setTitle('Historical Dominance - Bitcoin Mining Pools | BTCmempool.org', true);
+    this.seoService.setTitle('Historical Dominance - Bitcoin Mining Pools');
     // this.seoService.setDescription($localize`:@@meta.descriptions.bitcoin.graphs.hashrate-pools:See Bitcoin mining pool dominance visualized over time: see how top mining pools' share of total hashrate has fluctuated over time.`);
     this.seoService.setDescription('Explore Bitcoin mining pool dominance over time: visualize how top mining pools\' share of the total hashrate has fluctuated.');
     this.miningWindowPreference = this.miningService.getDefaultTimespan('6m');

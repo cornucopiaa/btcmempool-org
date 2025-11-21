@@ -80,7 +80,7 @@ export class PoolComponent implements OnInit {
         }),
         map((poolStats) => {
           // this.seoService.setTitle(poolStats.pool.name);
-          this.seoService.setTitle(`${poolStats.pool.name} - Bitcoin Mining Stats | BTCmempool.org`, true);
+          this.seoService.setTitle(`${poolStats.pool.name} - Bitcoin Mining Stats`);
           // this.seoService.setDescription($localize`:@@meta.description.mining.pool:See mining pool stats for ${poolStats.pool.name}\: most recent mined blocks, hashrate over time, total block reward to date, known coinbase addresses, and more.`);
           this.seoService.setDescription(`Check out ${poolStats.pool.name}'s Bitcoin mining performance: blocks mined, hash rate, and key metrics — access real-time updates on BTCmempool.org.`);
           let regexes = '"';

@@ -89,7 +89,7 @@ export class CalculatorComponent implements OnInit {
       this.form.get('bitcoin').setValue(bitcoinRate, { emitEvent: false });
     });
 
-    this.seoService.setTitle('Bitcoin Calculator - Exchange Rate | BTCmempool.org', true);
+    this.seoService.setTitle('Bitcoin Calculator - Exchange Rate');
     this.seoService.setDescription('Use the BTCmempool.org Bitcoin Calculator to quickly convert any fiat currency to Bitcoin and view the most recent fiat price, updated every 8 minutes.');
   }
 

@@ -333,7 +333,8 @@ main {
 
 /* Mobile: Show menu in place of 4 icons */
 .explorers-menu-mobile {
-  margin-right: auto;
+  margin-left: auto;
+  margin-right: 0;
 
   @media (min-width: 768px) {
     display: none !important;

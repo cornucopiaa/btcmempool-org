@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { StateService } from '../../services/state.service';
-import { WebsocketService } from '../../services/websocket.service';
-import {seoDescriptionNetwork} from '../../shared/common.utils';
-import {SeoService} from '../../services/seo.service';
+import { StateService } from '@app/services/state.service';
+import { WebsocketService } from '@app/services/websocket.service';
+import { SeoService } from '@app/services/seo.service';
 
 @Component({
   selector: 'app-calculator',

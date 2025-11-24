@@ -21,7 +21,7 @@
       <a [href]="env.MEMPOOL_WEBSITE_URL + urlLanguage + (networkPaths['mainnet'] || '')" ngbDropdownItem class="mainnet"><app-svg-images name="bitcoin" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Mainnet</a>
       <a [href]="env.MEMPOOL_WEBSITE_URL + urlLanguage + (networkPaths['signet'] || '/signet')" ngbDropdownItem *ngIf="env.SIGNET_ENABLED" class="signet"><app-svg-images name="signet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Signet</a>
       <a [href]="env.MEMPOOL_WEBSITE_URL + urlLanguage + (networkPaths['testnet'] || '/testnet')" ngbDropdownItem *ngIf="env.TESTNET_ENABLED" class="testnet"><app-svg-images name="testnet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet3</a>
-      <a [href]="env.MEMPOOL_WEBSITE_URL + urlLanguage + (networkPaths['testnet4'] || '/testnet4')" ngbDropdownItem *ngIf="env.TESTNET4_ENABLED" class="testnet"><app-svg-images name="testnet4" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet4 <span class="badge badge-pill badge-warning beta-network" i18n="beta">beta</span></a>
+      <a [href]="env.MEMPOOL_WEBSITE_URL + urlLanguage + (networkPaths['testnet4'] || '/testnet4')" ngbDropdownItem *ngIf="env.TESTNET4_ENABLED" class="testnet"><app-svg-images name="testnet4" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet4</a>
       <h6 class="dropdown-header" i18n="master-page.layer2-networks-header">Layer 2 Networks</h6>
       <a ngbDropdownItem class="liquid mr-1" [class.active]="network.val === 'liquid'" [routerLink]="networkPaths['liquid'] || '/'"><app-svg-images name="liquid" width="22" height="22" viewBox="0 0 125 125" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Liquid</a>
       <a ngbDropdownItem *ngIf="env.LIQUID_TESTNET_ENABLED" class="liquidtestnet" [class.active]="network.val === 'liquidtestnet'" [routerLink]="networkPaths['liquidtestnet'] || '/testnet'"><app-svg-images name="liquidtestnet" width="22" height="22" viewBox="0 0 125 125" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Liquid Testnet</a>
@@ -39,11 +39,6 @@
       <li class="nav-item" routerLinkActive="active" id="btn-graphs">
         <a class="nav-link" [routerLink]="['/graphs' | relativeUrl]" (click)="collapse()"><fa-icon [icon]="['fas', 'chart-area']" [fixedWidth]="true" i18n-title="master-page.graphs" title="Graphs"></fa-icon></a>
       </li>
-      <!--
-      <li class="nav-item d-none d-lg-block" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/tv' | relativeUrl]" (click)="collapse()"><fa-icon [icon]="['fas', 'tv']" [fixedWidth]="true" i18n-title="master-page.tvview" title="TV view"></fa-icon></a>
-      </li>
-      -->
       <li class="nav-item" routerLinkActive="active" id="btn-assets">
         <a class="nav-link" [routerLink]="['/assets' | relativeUrl]" (click)="collapse()"><fa-icon [icon]="['fas', 'database']" [fixedWidth]="true" i18n-title="master-page.assets" title="Assets"></fa-icon></a>
       </li>

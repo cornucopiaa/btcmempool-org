@@ -30,6 +30,7 @@ class Server {
   secureHost = true;
   secureMempoolHost = true;
   canonicalHost: string;
+  networkName: string;
 
   seoQueueLength: number = 0;
   unfurlQueueLength: number = 0;
@@ -41,6 +42,7 @@ class Server {
     this.secureHost = config.SERVER.HOST.startsWith('https');
     this.secureMempoolHost = config.MEMPOOL.HTTP_HOST.startsWith('https');
     this.network = config.MEMPOOL.NETWORK || 'bitcoin';
+    this.networkName = networks[this.network].networkName || capitalize(this.network);
 
     this.canonicalHost = config.SERVER.HOST;
 
@@ -328,7 +330,7 @@ class Server {
 
     if (matchedRoute.render) {
       ogImageUrl = `${config.SERVER.HOST}/render/${lang || 'en'}/preview${path}`;
-      ogTitle = `${this.network ? capitalize(this.network) + ' ' : ''}${matchedRoute.networkMode !== 'mainnet' ? capitalize(matchedRoute.networkMode) + ' ' : ''}${matchedRoute.title}`;
+      ogTitle = `${this.networkName} ${matchedRoute.networkMode !== 'mainnet' ? capitalize(matchedRoute.networkMode) + ' ' : ''}${matchedRoute.title}`;
     } else {
       ogTitle = networks[this.network].title;
     }
@@ -383,7 +385,7 @@ class Server {
 
     if (matchedRoute.render) {
       ogImageUrl = `${config.SERVER.HOST}/render/${lang || 'en'}/preview${path}`;
-      ogTitle = `${this.network ? capitalize(this.network) + ' ' : ''}${matchedRoute.networkMode !== 'mainnet' ? capitalize(matchedRoute.networkMode) + ' ' : ''}${matchedRoute.title}`;
+      ogTitle = `${this.networkName} ${matchedRoute.networkMode !== 'mainnet' ? capitalize(matchedRoute.networkMode) + ' ' : ''}${matchedRoute.title}`;
     }
 
     if (matchedRoute.sip) {

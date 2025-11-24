@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { languages } from '../../app.constants';
-import { LanguageService } from '../../services/language.service';
+import { languages } from '@app/app.constants';
+import { LanguageService } from '@app/services/language.service';
 
 @Component({
   selector: 'app-language-selector',

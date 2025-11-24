@@ -1,17 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, LOCALE_ID, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { EChartsOption } from '../../../graphs/echarts';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, LOCALE_ID, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { EChartsOption } from '@app/graphs/echarts';
 import { Observable, Subject, Subscription, combineLatest, fromEvent, merge, share } from 'rxjs';
 import { startWith, switchMap, tap } from 'rxjs/operators';
-import { SeoService } from '../../../services/seo.service';
+import { SeoService } from '@app/services/seo.service';
 import { formatNumber } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { download, formatterXAxis, formatterXAxisLabel, formatterXAxisTimeCategory } from '../../../shared/graphs.utils';
-import { StorageService } from '../../../services/storage.service';
-import { MiningService } from '../../../services/mining.service';
-import { ActivatedRoute } from '@angular/router';
-import { Acceleration } from '../../../interfaces/node-api.interface';
-import { ServicesApiServices } from '../../../services/services-api.service';
-import { StateService } from '../../../services/state.service';
+import { download, formatterXAxis, formatterXAxisLabel, formatterXAxisTimeCategory } from '@app/shared/graphs.utils';
+import { StorageService } from '@app/services/storage.service';
+import { MiningService } from '@app/services/mining.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Acceleration } from '@interfaces/node-api.interface';
+import { ServicesApiServices } from '@app/services/services-api.service';
+import { StateService } from '@app/services/state.service';
+import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pipe';
 
 @Component({
   selector: 'app-acceleration-fees-graph',
@@ -22,7 +23,7 @@ import { StateService } from '../../../services/state.service';
       position: absolute;
       top: 50%;
       left: calc(50% - 15px);
-      z-index: 100;
+      z-index: 99;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,7 +33,7 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
   @Input() height: number = 300;
   @Input() right: number | string = 45;
   @Input() left: number | string = 75;
-  @Input() period: '3d' | '1w' | '1m' = '1w';
+  @Input() period: '24h' | '3d' | '1w' | '1m' | 'all' = '1w';
   @Input() accelerations$: Observable<Acceleration[]>;
 
   miningWindowPreference: string;
@@ -45,10 +46,12 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
 
   aggregatedHistory$: Observable<any>;
   statsSubscription: Subscription;
+  aggregatedHistorySubscription: Subscription;
+  fragmentSubscription: Subscription;
   isLoading = true;
   formatNumber = formatNumber;
   timespan = '';
-  periodSubject$: Subject<'3d' | '1w' | '1m'> = new Subject();
+  periodSubject$: Subject<'24h' | '3d' | '1w' | '1m' | 'all'> = new Subject();
   chartInstance: any = undefined;
   daysAvailable: number = 0;
 
@@ -62,6 +65,8 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
     private route: ActivatedRoute,
     public stateService: StateService,
     private cd: ChangeDetectorRef,
+    private router: Router,
+    private zone: NgZone,
   ) {
     this.radioGroupForm = this.formBuilder.group({ dateSpan: '1w' });
     this.radioGroupForm.controls.dateSpan.setValue('1w');
@@ -76,9 +81,9 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
     }
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
     this.radioGroupForm.controls.dateSpan.setValue(this.miningWindowPreference);
-    
-    this.route.fragment.subscribe((fragment) => {
-      if (['24h', '3d', '1w', '1m', '3m'].indexOf(fragment) > -1) {
+
+    this.fragmentSubscription = this.route.fragment.subscribe((fragment) => {
+      if (['24h', '3d', '1w', '1m', '3m', 'all'].indexOf(fragment) > -1) {
         this.radioGroupForm.controls.dateSpan.setValue(fragment, { emitEvent: false });
       }
     });
@@ -110,7 +115,7 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
       share(),
     );
 
-    this.aggregatedHistory$.subscribe();
+    this.aggregatedHistorySubscription = this.aggregatedHistory$.subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -261,7 +266,7 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
           type: 'bar',
           barWidth: '90%',
           large: true,
-          barMinHeight: 1,
+          barMinHeight: 3,
         },
       ],
       dataZoom: (this.widget || data.length === 0 )? undefined : [{
@@ -294,6 +299,19 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
 
   onChartInit(ec) {
     this.chartInstance = ec;
+
+    this.chartInstance.on('click', (e) => {
+      this.zone.run(() => {
+        if (['24h', '3d'].includes(this.timespan)) {
+          const url = new RelativeUrlPipe(this.stateService).transform(`/block/${e.data[2]}`);
+          if (e.event.event.shiftKey || e.event.event.ctrlKey || e.event.event.metaKey) {
+            window.open(url);
+          } else {
+            this.router.navigate([url]);
+          }
+        }
+      });
+    });
   }
 
   isMobile() {
@@ -319,8 +337,8 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
   }
 
   ngOnDestroy(): void {
-    if (this.statsSubscription) {
-      this.statsSubscription.unsubscribe();
-    }
+    this.aggregatedHistorySubscription?.unsubscribe();
+    this.fragmentSubscription?.unsubscribe();
+    this.statsSubscription?.unsubscribe();
   }
 }

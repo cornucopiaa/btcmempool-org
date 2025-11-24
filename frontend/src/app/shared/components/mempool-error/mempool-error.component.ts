@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EmbeddedViewRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export const MempoolErrors = {
@@ -26,6 +26,7 @@ export const MempoolErrors = {
   'unauthorized': `You are not authorized to do this`,
   'faucet_too_soon': `You cannot request any more coins right now. Try again later.`,
   'faucet_not_available': `The faucet is not available right now. Try again later.`,
+  'faucet_not_available_no_utxo': `The faucet is not available right now. Please try again once a new block has been mined.`,
   'faucet_maximum_reached': `You are not allowed to request more coins`,
   'faucet_address_not_allowed': `You cannot use this address`,
   'faucet_below_minimum': `Requested amount is too small`,
@@ -42,8 +43,8 @@ export function isMempoolError(error: string) {
   selector: 'app-mempool-error',
   templateUrl: './mempool-error.component.html'
 })
-export class MempoolErrorComponent implements OnInit, AfterViewInit {
-  @ViewChild('lowBalance') lowBalance!: TemplateRef<any>;
+export class MempoolErrorComponent implements OnInit {
+  @ViewChild('lowBalance', { static: true }) lowBalance!: TemplateRef<any>;
   @Input() error: string;
   @Input() alertClass = 'alert-danger';
   @Input() textOnly = false;
@@ -51,18 +52,22 @@ export class MempoolErrorComponent implements OnInit, AfterViewInit {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private viewContainerRef: ViewContainerRef,
   ) { }
 
-  ngAfterViewInit(): void {
-    // Special hack for the i18n string with a href link inside
-    const view = this.viewContainerRef.createEmbeddedView(this.lowBalance);
-    const rawHtml = view.rootNodes.map(node => node.outerHTML).join('');
-    MempoolErrors['not_enough_balance'] = rawHtml;
-  }
-
   ngOnInit(): void {
-    if (Object.keys(MempoolErrors).includes(this.error)) {
+     // Special hack for the i18n string with a href link inside
+     const embeddedViewRef: EmbeddedViewRef<any> = this.lowBalance.createEmbeddedView({});
+     embeddedViewRef.detectChanges();
+     const rawHtml = embeddedViewRef.rootNodes.map((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        return node.outerHTML;
+      }
+      return '';
+    }).join('');
+     MempoolErrors['not_enough_balance'] = rawHtml;
+     if (Object.keys(MempoolErrors).includes(this.error)) {
       this.errorContent = this.sanitizer.bypassSecurityTrustHtml(MempoolErrors[this.error]);
     } else {
       this.errorContent = this.error;

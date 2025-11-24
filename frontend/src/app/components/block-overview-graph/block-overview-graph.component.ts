@@ -1,23 +1,24 @@
 import { Component, ElementRef, ViewChild, HostListener, Input, Output, EventEmitter, NgZone, AfterViewInit, OnDestroy, OnChanges } from '@angular/core';
-import { TransactionStripped } from '../../interfaces/node-api.interface';
-import { FastVertexArray } from './fast-vertex-array';
-import BlockScene from './block-scene';
-import TxSprite from './tx-sprite';
-import TxView from './tx-view';
-import { Color, Position } from './sprite-types';
-import { Price } from '../../services/price.service';
-import { StateService } from '../../services/state.service';
-import { ThemeService } from '../../services/theme.service';
+import { TransactionStripped } from '@interfaces/node-api.interface';
+import { FastVertexArray } from '@components/block-overview-graph/fast-vertex-array';
+import BlockScene from '@components/block-overview-graph/block-scene';
+import TxSprite from '@components/block-overview-graph/tx-sprite';
+import TxView from '@components/block-overview-graph/tx-view';
+import { Color, Position } from '@components/block-overview-graph/sprite-types';
+import { Price } from '@app/services/price.service';
+import { StateService } from '@app/services/state.service';
+import { ThemeService } from '@app/services/theme.service';
 import { Subscription } from 'rxjs';
-import { defaultColorFunction, setOpacity, defaultAuditColors, defaultColors, ageColorFunction, contrastColorFunction, contrastAuditColors, contrastColors } from './utils';
-import { ActiveFilter, FilterMode, toFlags } from '../../shared/filters.utils';
-import { detectWebGL } from '../../shared/graphs.utils';
+import { defaultColorFunction, setOpacity, defaultAuditColors, defaultColors, ageColorFunction, contrastColorFunction, contrastAuditColors, contrastColors } from '@components/block-overview-graph/utils';
+import { ActiveFilter, FilterMode, toFlags } from '@app/shared/filters.utils';
+import { detectWebGL } from '@app/shared/graphs.utils';
 
 const unmatchedOpacity = 0.2;
 const unmatchedAuditColors = {
   censored: setOpacity(defaultAuditColors.censored, unmatchedOpacity),
   missing: setOpacity(defaultAuditColors.missing, unmatchedOpacity),
   added: setOpacity(defaultAuditColors.added, unmatchedOpacity),
+  added_prioritized: setOpacity(defaultAuditColors.added_prioritized, unmatchedOpacity),
   prioritized: setOpacity(defaultAuditColors.prioritized, unmatchedOpacity),
   accelerated: setOpacity(defaultAuditColors.accelerated, unmatchedOpacity),
 };
@@ -25,6 +26,7 @@ const unmatchedContrastAuditColors = {
   censored: setOpacity(contrastAuditColors.censored, unmatchedOpacity),
   missing: setOpacity(contrastAuditColors.missing, unmatchedOpacity),
   added: setOpacity(contrastAuditColors.added, unmatchedOpacity),
+  added_prioritized: setOpacity(contrastAuditColors.added_prioritized, unmatchedOpacity),
   prioritized: setOpacity(contrastAuditColors.prioritized, unmatchedOpacity),
   accelerated: setOpacity(contrastAuditColors.accelerated, unmatchedOpacity),
 };
@@ -170,13 +172,19 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
   ngOnDestroy(): void {
     if (this.animationFrameRequest) {
       cancelAnimationFrame(this.animationFrameRequest);
-      clearTimeout(this.animationHeartBeat);
     }
+    clearTimeout(this.animationHeartBeat);
     if (this.canvas) {
       this.canvas.nativeElement.removeEventListener('webglcontextlost', this.handleContextLost);
       this.canvas.nativeElement.removeEventListener('webglcontextrestored', this.handleContextRestored);
-      this.themeChangedSubscription?.unsubscribe();
     }
+    if (this.scene) {
+      this.scene.destroy();
+    }
+    this.vertexArray.destroy();
+    this.vertexArray = null;
+    this.themeChangedSubscription?.unsubscribe();
+    this.searchSubscription?.unsubscribe();
   }
 
   clear(direction): void {
@@ -196,7 +204,7 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
   }
 
   // initialize the scene without any entry transition
-  setup(transactions: TransactionStripped[]): void {
+  setup(transactions: TransactionStripped[], sort: boolean = false): void {
     const filtersAvailable = transactions.reduce((flagSet, tx) => flagSet || tx.flags > 0, false);
     if (filtersAvailable !== this.filtersAvailable) {
       this.setFilterFlags();
@@ -204,7 +212,7 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     this.filtersAvailable = filtersAvailable;
     if (this.scene) {
       this.clearUpdateQueue();
-      this.scene.setup(transactions);
+      this.scene.setup(transactions, sort);
       this.readyNextFrame = true;
       this.start();
       this.updateSearchHighlight();
@@ -445,7 +453,7 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     }
     this.applyQueuedUpdates();
     // skip re-render if there's no change to the scene
-    if (this.scene && this.gl) {
+    if (this.scene && this.gl && this.vertexArray) {
       /* SET UP SHADER UNIFORMS */
       // screen dimensions
       this.gl.uniform2f(this.gl.getUniformLocation(this.shaderProgram, 'screenSize'), this.displayWidth, this.displayHeight);
@@ -487,9 +495,7 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     if (this.running && this.scene && now <= (this.scene.animateUntil + 500)) {
       this.doRun();
     } else {
-      if (this.animationHeartBeat) {
-        clearTimeout(this.animationHeartBeat);
-      }
+      clearTimeout(this.animationHeartBeat);
       this.animationHeartBeat = window.setTimeout(() => {
         this.start();
       }, 1000);

@@ -402,6 +402,14 @@ class Server {
   }
 
   onUnhandledException(type, error): void {
+    if (type === 'uncaughtException' && error instanceof SyntaxError
+        && typeof error.stack === 'string' && error.stack.includes('@mempool/electrum-client')) {
+      // The electrum-client library calls JSON.parse on incoming messages without try/catch.
+      // A malformed message from the Electrum server crashes the process. The client
+      // auto-reconnects (maxRetry: MAX_SAFE_INTEGER), so log and keep running instead of exiting.
+      logger.err(`Ignoring electrum-client JSON parse error to keep process alive: ${error.message}`);
+      return;
+    }
     console.error(`${type}:`, error);
     this.onExit(type, 1);
   }

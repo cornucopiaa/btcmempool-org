@@ -50,6 +50,10 @@ import mempoolBlocks from './api/mempool-blocks';
 import walletApi from './api/services/wallets';
 import stratumApi from './api/services/stratum';
 
+// A pass normally takes seconds; catching up on blocks after a restart is bounded by
+// INITIAL_BLOCKS_AMOUNT, so 15 minutes in one step only happens when an await hangs.
+const MAIN_LOOP_STEP_TIMEOUT_MS = 15 * 60 * 1000;
+
 class Server {
   private wss: WebSocket.Server | undefined;
   private wssUnixSocket: WebSocket.Server | undefined;
@@ -58,6 +62,10 @@ class Server {
   private app: Application;
   private currentBackendRetryInterval = 1;
   private backendRetryCount = 0;
+  // Step of runMainUpdateLoop in progress (null between passes), for the watchdog
+  private mainLoopStep: string | null = null;
+  private mainLoopStepStartedAt = 0;
+  private mainLoopMempoolSize = -1;
 
   private maxHeapSize: number = 0;
   private heapLogInterval: number = 60;
@@ -199,6 +207,7 @@ class Server {
 
     if (config.MEMPOOL.ENABLED) {
       this.runMainUpdateLoop();
+      setInterval(() => { this.checkMainLoopWatchdog(); }, 60 * 1000);
     }
 
     setInterval(() => { this.healthCheck(); }, 2500);
@@ -232,6 +241,7 @@ class Server {
     const start = Date.now();
     try {
       try {
+        this.setMainLoopStep('updateMemPoolInfo');
         await memPool.$updateMemPoolInfo();
       } catch (e) {
         const msg = `updateMempoolInfo: ${(e instanceof Error ? e.message : e)}`;
@@ -241,13 +251,18 @@ class Server {
           logger.debug(msg);
         }
       }
+      this.setMainLoopStep('getRawMempool');
       const newMempool = await bitcoinApi.$getRawMempool();
+      this.setMainLoopStep('secondNode');
       const minFeeMempool = memPool.limitGBT ? await bitcoinSecondClient.getRawMemPool() : null;
       const minFeeTip = memPool.limitGBT ? await bitcoinSecondClient.getBlockCount() : -1;
+      this.setMainLoopStep('updateAccelerations');
       const latestAccelerations = await accelerationApi.$updateAccelerations();
+      this.setMainLoopStep('updateBlocks');
       const numHandledBlocks = await blocks.$updateBlocks();
       const pollRate = config.MEMPOOL.POLL_RATE_MS * (indexer.indexerIsRunning() ? 10 : 1);
       if (numHandledBlocks === 0) {
+        this.setMainLoopStep('updateMempool');
         await memPool.$updateMempool(newMempool, latestAccelerations, minFeeMempool, minFeeTip, pollRate);
       }
       indexer.$run();
@@ -284,7 +299,41 @@ class Server {
       }
       setTimeout(this.runMainUpdateLoop.bind(this), 1000 * this.currentBackendRetryInterval);
     } finally {
+      this.mainLoopStep = null;
       diskCache.unlock();
+    }
+  }
+
+  private setMainLoopStep(step: string): void {
+    this.mainLoopStep = step;
+    this.mainLoopStepStartedAt = Date.now();
+  }
+
+  /**
+   * runMainUpdateLoop schedules its next pass only after every await in the current one
+   * settles, so one call that never settles stops mempool and block updates for good
+   * while HTTP keeps serving stale data (btcmempool.org's mempool view going empty).
+   * If a single step runs far longer than any legitimate pass, log which one and exit,
+   * so the container restarts instead of freezing silently.
+   */
+  private checkMainLoopWatchdog(): void {
+    if (this.mainLoopStep === null) {
+      return;
+    }
+    // The initial mempool load runs to completion inside one $updateMempool call and may
+    // legitimately take long; a growing mempool cache is progress, not a hang.
+    if (this.mainLoopStep === 'updateMempool' && !memPool.isInSync()) {
+      const size = Object.keys(memPool.getMempool()).length;
+      if (size !== this.mainLoopMempoolSize) {
+        this.mainLoopMempoolSize = size;
+        this.mainLoopStepStartedAt = Date.now();
+        return;
+      }
+    }
+    const stuckMs = Date.now() - this.mainLoopStepStartedAt;
+    if (stuckMs > MAIN_LOOP_STEP_TIMEOUT_MS) {
+      logger.err(`Main update loop stuck in ${this.mainLoopStep} for ${Math.round(stuckMs / 60000)} min; exiting so the container restarts`);
+      this.onExit('main-loop-watchdog', 1);
     }
   }
 
@@ -402,14 +451,6 @@ class Server {
   }
 
   onUnhandledException(type, error): void {
-    if (type === 'uncaughtException' && error instanceof SyntaxError
-        && typeof error.stack === 'string' && error.stack.includes('@mempool/electrum-client')) {
-      // The electrum-client library calls JSON.parse on incoming messages without try/catch.
-      // A malformed message from the Electrum server crashes the process. The client
-      // auto-reconnects (maxRetry: MAX_SAFE_INTEGER), so log and keep running instead of exiting.
-      logger.err(`Ignoring electrum-client JSON parse error to keep process alive: ${error.message}`);
-      return;
-    }
     console.error(`${type}:`, error);
     this.onExit(type, 1);
   }

@@ -32,12 +32,53 @@ class BitcoindElectrsApi extends BitcoinApi implements AbstractBitcoinApi {
       null,
       electrumCallbacks
     );
+    this.hardenElectrumClient(this.electrumClient);
 
     this.electrumClient.initElectrum(electrumConfig, electrumPersistencePolicy)
       .then(() => { })
       .catch((err) => {
         logger.err(`Error connecting to Electrum Server at ${config.ELECTRUM.HOST}:${config.ELECTRUM.PORT}`);
       });
+  }
+
+  /**
+   * Works around two defects in @mempool/electrum-client 1.1.9 that together wedge the
+   * client until restart:
+   * - Its MessageParser is created once and survives reconnects. When the server drops
+   *   the connection mid-response (ElectrumX "closing session over res usage"), the
+   *   partial message stays buffered and the first message on the new connection is
+   *   appended to it, producing invalid JSON.
+   * - onMessage JSON.parses without try/catch, and the parser advances its buffer only
+   *   after the callback returns. A throw leaves the bad message at the head of the
+   *   buffer, so every later chunk re-parses it and throws again: no response is ever
+   *   delivered and every request (address lookups) hangs.
+   */
+  private hardenElectrumClient(client: any): void {
+    const onClose = client.onClose.bind(client);
+    client.onClose = (...args: any[]) => {
+      client.mp.buffer = '';
+      return onClose(...args);
+    };
+
+    const onMessage = client.onMessage.bind(client);
+    client.onMessage = (body: string, n: number) => {
+      try {
+        onMessage(body, n);
+      } catch (e) {
+        if (!(e instanceof SyntaxError)) {
+          throw e;
+        }
+        logger.err(`Dropping unparseable Electrum message (${body.length} bytes): ${e.message}`);
+        // Fail the request it answered rather than leave it pending forever. Responses
+        // end with the request id; a batch response or a mangled tail just won't match.
+        const id = body.match(/"id":\s*(\d+)\s*}\s*$/)?.[1];
+        const callback = id !== undefined ? client.callback_message_queue[id] : undefined;
+        if (callback) {
+          delete client.callback_message_queue[id as string];
+          callback(new Error('Unparseable Electrum response'));
+        }
+      }
+    };
   }
 
   async $getAddress(address: string): Promise<IEsploraApi.Address> {

@@ -6,6 +6,15 @@
   align-self: center;
 }
 
+.seo-summary {
+  margin-bottom: 1rem;
+  p {
+    margin-bottom: 0;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+}
+
 .title-block {
   flex-wrap: wrap;
   align-items: baseline;

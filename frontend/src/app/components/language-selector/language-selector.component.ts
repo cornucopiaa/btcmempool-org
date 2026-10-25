@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { languages } from '@app/app.constants';
 import { LanguageService } from '@app/services/language.service';
@@ -16,7 +15,6 @@ export class LanguageSelectorComponent implements OnInit {
   languages = languages;
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
     private formBuilder: UntypedFormBuilder,
     private languageService: LanguageService,
   ) { }
@@ -25,13 +23,17 @@ export class LanguageSelectorComponent implements OnInit {
     this.languageForm = this.formBuilder.group({
       language: ['en']
     });
-    this.languageForm.get('language').setValue(this.languageService.getLanguage());
+    this.languageForm.get('language')?.setValue(this.languageService.getLanguage());
   }
 
   changeLanguage() {
-    const newLang = this.languageForm.get('language').value;
-    this.languageService.setLanguage(newLang);
-    const rawUrlPath = this.languageService.stripLanguageFromUrl(null);
-    this.document.location.href = (newLang !== 'en' ? `/${newLang}` : '') + rawUrlPath;
+    // Language switching disabled - locale detection removed
+    // const newLang = this.languageForm.get('language').value;
+    // this.languageService.setLanguage(newLang);
+    // const rawUrlPath = this.languageService.stripLanguageFromUrl(null);
+    // this.document.location.href = (newLang !== 'en' ? `/${newLang}` : '') + rawUrlPath;
+    
+    // Keep the UI element but make it non-functional
+    console.log('Language switching is disabled');
   }
 }

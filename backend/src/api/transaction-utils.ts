@@ -75,7 +75,12 @@ class TransactionUtils {
 
   public async $getMempoolTransactionsExtended(txids: string[], addPrevouts = false, lazyPrevouts = false, forceCore = false): Promise<MempoolTransactionExtended[]> {
     if (forceCore || config.MEMPOOL.BACKEND !== 'esplora') {
-      const limiter = pLimit(8); // Run 8 requests at a time
+      // This bitcoind is shared with other services (btcfees.org explorer, electrumx, cron jobs).
+      // Each $getMempoolTransactionExtended issues 2 RPC calls (getrawtransaction +
+      // getmempoolentry), so pLimit(8) meant 16 concurrent calls -- exactly bitcoind's
+      // -rpcthreads=16 -- and starved every other consumer for ~10s at a time.
+      // Keep this at roughly a third of -rpcthreads/2 so the pool always has headroom.
+      const limiter = pLimit(3); // Run 3 requests at a time (=6 concurrent RPC calls)
       const results = await Promise.allSettled(txids.map(
         txid => limiter(() => this.$getMempoolTransactionExtended(txid, addPrevouts, lazyPrevouts, forceCore))
       ));

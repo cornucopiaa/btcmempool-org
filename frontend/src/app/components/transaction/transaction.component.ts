@@ -583,12 +583,8 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
               replaceUrl: true,
             });
           }
-          this.seoService.setTitle(
-            $localize`:@@bisq.transaction.browser-title:Transaction: ${this.txId}:INTERPOLATION:`
-          );
-          const network = this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ? 'Liquid' : 'Bitcoin';
-          const seoDescription = seoDescriptionNetwork(this.stateService.network);
-          this.seoService.setDescription($localize`:@@meta.description.bitcoin.transaction:Get real-time status, addresses, fees, script info, and more for ${network}${seoDescription} transaction with txid ${this.txId}.`);
+          this.seoService.setTitle(`Bitcoin Transaction: ${this.txId}`);
+          this.seoService.setDescription(`Check Bitcoin (BTC) transaction ${this.txId}`);
           this.resetTransaction();
           return merge(
             of(true),
@@ -1151,6 +1147,13 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       && this.notAcceleratedOnLoad // avoid briefly showing accelerator checkout on already accelerated txs
     );
+  }
+
+  getTotalOutputValue(): number {
+    if (!this.tx || !this.tx.vout) {
+      return 0;
+    }
+    return this.tx.vout.reduce((sum, output) => sum + (output.value || 0), 0);
   }
 
   ngOnDestroy() {

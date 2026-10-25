@@ -76,8 +76,10 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.seoService.setTitle($localize`:@@41545303ec98792b738d6237adbd1f3b54a22196:Block Fees Vs Subsidy`);
-    this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.block-fees-subsidy:See the mining fees earned per Bitcoin block compared to the Bitcoin block subsidy, visualized in BTC and USD over time.`);
+    // this.seoService.setTitle($localize`:@@41545303ec98792b738d6237adbd1f3b54a22196:Block Fees Vs Subsidy`);
+    this.seoService.setTitle('Block Fees Vs Subsidy - Bitcoin Mining Pools');
+    // this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.block-fees-subsidy:See the mining fees earned per Bitcoin block compared to the Bitcoin block subsidy, visualized in BTC and USD over time.`);
+    this.seoService.setDescription('Visualize mining fees vs. block subsidy over time in BTC and USD.');
 
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
@@ -112,7 +114,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
                   blockSubsidyFiat: response.body.filter(val => val['USD'] > 0).map(val => this.subsidyAt(val.avgHeight) / 100_000_000 * val['USD']),
                   blockSubsidyPercent: response.body.map(val => this.subsidyAt(val.avgHeight) / (val.avgFees + this.subsidyAt(val.avgHeight)) * 100),
                 };
-                
+
                 this.prepareChartOptions();
                 this.isLoading = false;
               }),
@@ -164,10 +166,10 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
         borderRadius: 4,
         shadowColor: 'rgba(0, 0, 0, 0.5)',
         textStyle: {
-          color: 'var(--tooltip-grey)',
+          color: '#b1b1b1',
           align: 'left',
         },
-        borderColor: 'var(--active-bg)',
+        borderColor: '#171C3B',
         formatter: function (data) {
           if (data.length <= 0) {
             return '';
@@ -205,7 +207,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           show: true,
           position: 'bottom',
           axisLabel: {
-            color: 'var(--grey)',
+            color: '#dcdcdc',
             formatter: (val) => {
               return formatterXAxis(this.locale, this.timespan, parseInt(val, 10));
             }
@@ -225,7 +227,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
         data: [
           {
             name: 'Subsidy',
-            inactiveColor: 'var(--grey)',
+            inactiveColor: '#dcdcdc',
             textStyle: {
               color: 'white',
             },
@@ -233,7 +235,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           },
           {
             name: 'Fees',
-            inactiveColor: 'var(--grey)',
+            inactiveColor: '#dcdcdc',
             textStyle: {
               color: 'white',
             },
@@ -241,7 +243,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           },
           {
             name: 'Subsidy (USD)',
-            inactiveColor: 'var(--grey)',
+            inactiveColor: '#dcdcdc',
             textStyle: {
               color: 'white',
             },
@@ -249,7 +251,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           },
           {
             name: 'Fees (USD)',
-            inactiveColor: 'var(--grey)',
+            inactiveColor: '#dcdcdc',
             textStyle: {
               color: 'white',
             },
@@ -257,7 +259,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           },
           {
             name: 'Subsidy (%)',
-            inactiveColor: 'var(--grey)',
+            inactiveColor: '#dcdcdc',
             textStyle: {
               color: 'white',
             },
@@ -265,7 +267,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           },
           {
             name: 'Fees (%)',
-            inactiveColor: 'var(--grey)',
+            inactiveColor: '#dcdcdc',
             textStyle: {
               color: 'white',
             },
@@ -285,7 +287,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
         {
           type: 'value',
           axisLabel: {
-            color: 'var(--grey)',
+            color: '#dcdcdc',
             formatter: (val) => {
               return `${val}${this.displayMode === 'percentage' ? '%' : ' BTC'}`;
             }
@@ -308,7 +310,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
           type: 'value',
           position: 'right',
           axisLabel: {
-            color: 'var(--grey)',
+            color: '#dcdcdc',
             formatter: function(val) {
               return this.fiatShortenerPipe.transform(val, null, 'USD');
             }.bind(this)
@@ -486,7 +488,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
       tap((response) => {
         const startIndex = option.dataZoom[0].startValue;
         const endIndex = option.dataZoom[0].endValue;
-        
+
         // Update series with more granular data
         const lengthBefore = this.data.timestamp.length;
         this.data.timestamp.splice(startIndex, endIndex - startIndex, ...response.body.map(val => val.timestamp * 1000));
@@ -537,7 +539,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
   }
 
   getTimeRangeFromTimespan(from: number, to: number): string {
-    const timespan = to - from; 
+    const timespan = to - from;
     switch (true) {
       case timespan >= 3600 * 24 * 365 * 4: return 'all';
       case timespan >= 3600 * 24 * 365 * 3: return '4y';
@@ -559,7 +561,7 @@ export class BlockFeesSubsidyGraphComponent implements OnInit {
     const now = new Date();
     // @ts-ignore
     this.chartOptions.grid.bottom = 40;
-    this.chartOptions.backgroundColor = 'var(--active-bg)';
+    this.chartOptions.backgroundColor = '#171C3B';
     this.chartInstance.setOption(this.chartOptions);
     download(this.chartInstance.getDataURL({
       pixelRatio: 2,

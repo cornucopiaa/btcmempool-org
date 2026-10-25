@@ -1,6 +1,6 @@
 <div class="container-xl">
   <div class="text-center">
-    <h2 i18n="shared.calculator">Calculator</h2>
+    <h1 i18n="shared.calculator">Bitcoin Calculator</h1>
   </div>
 
   <ng-container *ngIf="price$ | async; else loading">
@@ -40,7 +40,7 @@
     <div class="row justify-content-center">
       <div class="bitcoin-satoshis-text">
         ₿
-         <span [innerHTML]="form.get('bitcoin').value | bitcoinsatoshis"></span> 
+        <span [innerHTML]="form.get('bitcoin').value | bitcoinsatoshis"></span>
         <span class="sats" i18n="shared.sats">sats</span>
       </div>
     </div>

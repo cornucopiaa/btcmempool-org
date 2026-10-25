@@ -9,9 +9,9 @@ import { StateService } from '@app/services/state.service';
 })
 export class SeoService {
   network = '';
-  baseTitle = 'mempool';
+  baseTitle = 'BTCmempool.org: Real-Time Bitcoin Explorer';
   baseDescription = 'Explore the full Bitcoin ecosystem&reg; with The Mempool Open Source Project&reg;.';
-  baseDomain = 'mempool.space';
+  baseDomain = 'btcmempool.org';
 
   canonicalLink: HTMLLinkElement = document.getElementById('canonical') as HTMLLinkElement;
 
@@ -47,8 +47,8 @@ export class SeoService {
     });
   }
 
-  setTitle(newTitle: string): void {
-    this.titleService.setTitle(newTitle + ' - ' + this.getTitle());
+  setTitle(newTitle: string, removeAddition?: boolean): void {
+    this.titleService.setTitle(removeAddition ? newTitle : `${newTitle} | ${this.getTitle()}`);
     this.metaService.updateTag({ property: 'og:title', content: newTitle});
     this.metaService.updateTag({ name: 'twitter:title', content: newTitle});
     this.metaService.updateTag({ property: 'og:meta:ready', content: 'ready'});
@@ -88,16 +88,16 @@ export class SeoService {
 
   getTitle(): string {
     if (this.network === 'testnet')
-      return this.baseTitle + ' - Bitcoin Testnet3';
+      return 'BTCmempool.org: Bitcoin Testnet3 Explorer';
     if (this.network === 'testnet4')
-      return this.baseTitle + ' - Bitcoin Testnet4';
+      return 'BTCmempool.org: Bitcoin Testnet4 Explorer';
     if (this.network === 'signet')
-      return this.baseTitle + ' - Bitcoin Signet';
+      return 'BTCmempool.org: Bitcoin Signet Explorer';
     if (this.network === 'liquid')
-      return this.baseTitle + ' - Liquid Network';
+      return 'BTCmempool.org: Liquid Network Explorer';
     if (this.network === 'liquidtestnet')
-      return this.baseTitle + ' - Liquid Testnet';
-    return this.baseTitle + ' - ' + (this.network ? this.ucfirst(this.network) : 'Bitcoin') + ' Explorer';
+      return 'BTCmempool.org: Liquid Testnet Explorer';
+    return this.baseTitle;
   }
 
   getDescription(): string {

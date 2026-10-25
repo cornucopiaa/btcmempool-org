@@ -169,6 +169,7 @@
               "src/favicon.ico",
               "src/resources",
               "src/robots.txt",
+              "src/sitemap.xml",
               "src/config.js",
               "src/customize.js",
               "src/config.template.js"
@@ -203,7 +204,8 @@
             "production": {
               "assets": [
                 "src/favicon.ico",
-                "src/robots.txt"
+                "src/robots.txt",
+                "src/sitemap.xml"
               ],
               "fileReplacements": [
                 {

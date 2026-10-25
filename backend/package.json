@@ -30,6 +30,8 @@
     "preinstall": "cd ../rust/gbt && npm run build-release && npm run to-backend",
     "start": "node --max-old-space-size=2048 dist/index.js",
     "start-production": "node --max-old-space-size=16384 dist/index.js",
+    "dev": "npm run build && npm run start",
+    "watch": "nodemon --watch 'src/**/*.ts' --exec 'npm run build && npm run start'",
     "reindex-updated-pools": "npm run start-production --update-pools",
     "reindex-all-blocks": "npm run start-production --update-pools --reindex-blocks",
     "test": "./node_modules/.bin/jest --coverage",

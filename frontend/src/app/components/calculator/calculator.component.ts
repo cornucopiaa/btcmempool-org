@@ -4,6 +4,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { StateService } from '@app/services/state.service';
 import { WebsocketService } from '@app/services/websocket.service';
+import { SeoService } from '@app/services/seo.service';
 
 @Component({
   selector: 'app-calculator',
@@ -24,6 +25,7 @@ export class CalculatorComponent implements OnInit {
     private stateService: StateService,
     private formBuilder: FormBuilder,
     private websocketService: WebsocketService,
+    private seoService: SeoService,
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class CalculatorComponent implements OnInit {
     let currency;
     this.price$ = this.currency$.pipe(
       switchMap((result) => {
-        currency = result; 
+        currency = result;
         return this.stateService.conversions$.asObservable();
       }),
       map((conversions) => {
@@ -89,6 +91,8 @@ export class CalculatorComponent implements OnInit {
 
     // Default form with 1 BTC
     this.form.get('bitcoin').setValue(1, { emitEvent: true });
+    this.seoService.setTitle('Bitcoin Calculator - Exchange Rate');
+    this.seoService.setDescription('Use the BTCmempool.org Bitcoin Calculator to quickly convert any fiat currency to Bitcoin and view the most recent fiat price, updated every 8 minutes.');
   }
 
   transformInput(name: string): void {

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faFilter, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faBolt, faCogs, faDatabase, faExchangeAlt, faInfoCircle,
@@ -269,6 +269,7 @@ import { GithubLogin } from '@components/github-login.component/github-login.com
     NgbCollapseModule,
     InfiniteScrollModule,
     FontAwesomeModule,
+    NgOptimizedImage,
   ],
   providers: [
     BytesPipe,

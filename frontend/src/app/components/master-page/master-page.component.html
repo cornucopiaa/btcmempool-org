@@ -61,17 +61,71 @@
     }
   </a>
 
-  <div (window:resize)="onResize()" ngbDropdown class="dropdown-container" *ngIf="isDropdownVisible">
-    <button ngbDropdownToggle type="button" class="btn btn-secondary dropdown-toggle-split d-flex justify-content-center align-items-center" aria-haspopup="true">
-      <app-svg-images class="d-flex justify-content-center align-items-center current-network-svg" [name]="network.val === '' ? 'bitcoin' : network.val" width="20" height="20" viewBox="0 0 65 65"></app-svg-images>
+<!--  <div (window:resize)="onResize()" ngbDropdown class="dropdown-container" *ngIf="isDropdownVisible">-->
+<!--    <button ngbDropdownToggle type="button" class="btn btn-secondary dropdown-toggle-split d-flex justify-content-center align-items-center" aria-haspopup="true">-->
+<!--      <app-svg-images class="d-flex justify-content-center align-items-center current-network-svg" [name]="network.val === '' ? 'bitcoin' : network.val" width="20" height="20" viewBox="0 0 65 65"></app-svg-images>-->
+<!--    </button>-->
+<!--    <div ngbDropdownMenu [ngClass]="{'dropdown-menu-right' : isMobile}">-->
+<!--      <a ngbDropdownItem *ngIf="env.MAINNET_ENABLED" class="mainnet" [routerLink]="networkPaths['mainnet'] || '/'"><app-svg-images name="bitcoin" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Mainnet</a>-->
+<!--      <a ngbDropdownItem *ngIf="env.SIGNET_ENABLED" class="signet" [class.active]="network.val === 'signet'" [routerLink]="networkPaths['signet'] || '/signet'"><app-svg-images name="signet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Signet</a>-->
+<!--      <a ngbDropdownItem *ngIf="env.TESTNET_ENABLED" class="testnet" [class.active]="network.val === 'testnet'" [routerLink]="networkPaths['testnet'] || '/testnet'"><app-svg-images name="testnet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet3</a>-->
+<!--      <a ngbDropdownItem *ngIf="env.TESTNET4_ENABLED" class="testnet4" [class.active]="network.val === 'testnet4'" [routerLink]="networkPaths['testnet4'] || '/testnet4'"><app-svg-images name="testnet4" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet4 <span class="badge badge-pill badge-warning beta-network" i18n="beta">beta</span></a>-->
+<!--      <a [href]="env.LIQUID_WEBSITE_URL + urlLanguage + (networkPaths['liquid'] || '')" ngbDropdownItem *ngIf="env.LIQUID_ENABLED" class="liquid" [class.active]="network.val === 'liquid'"><app-svg-images name="liquid" width="22" height="22" viewBox="0 0 125 125" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Liquid</a>-->
+<!--      <a [href]="env.LIQUID_WEBSITE_URL + urlLanguage  + (networkPaths['liquidtestnet'] || '/testnet')" ngbDropdownItem *ngIf="env.LIQUID_TESTNET_ENABLED" class="liquidtestnet" [class.active]="network.val === 'liquid'"><app-svg-images name="liquidtestnet" width="22" height="22" viewBox="0 0 125 125" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Liquid Testnet</a>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <!-- 4 Icons - Desktop only -->
+  <div class="logo-links-block logo-links-block__nav logo-links-desktop">
+    <a href="https://btcscan.org/" target="_blank"><img [src]="bitcoinImageSource" alt="bitcoin logo"></a>
+    <a href="https://ethscan.org/" target="_blank"><img [src]="ethImageSource" alt="ethereum logo"></a>
+    <a href="https://xmrscan.org/" target="_blank"><img [src]="moneroImageSource" alt="monero logo"></a>
+    <a href="https://btcmempool.org/" target="_blank"><img [src]="mempoolIconImageSource" alt="monero logo"></a>
+  </div>
+
+  <!-- Explorers Menu - Mobile only (replaces 4 icons) -->
+  <div class="explorers-menu-container explorers-menu-mobile">
+    <button class="explorers-hamburger-btn" (click)="toggleExplorersMenu()" [attr.aria-expanded]="explorersMenuOpen">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
     </button>
-    <div ngbDropdownMenu [ngClass]="{'dropdown-menu-right' : isMobile}">
-      <a ngbDropdownItem *ngIf="env.MAINNET_ENABLED" class="mainnet" [routerLink]="networkPaths['mainnet'] || '/'"><app-svg-images name="bitcoin" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Mainnet</a>
-      <a ngbDropdownItem *ngIf="env.SIGNET_ENABLED" class="signet" [class.active]="network.val === 'signet'" [routerLink]="networkPaths['signet'] || '/signet'"><app-svg-images name="signet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Signet</a>
-      <a ngbDropdownItem *ngIf="env.TESTNET_ENABLED" class="testnet" [class.active]="network.val === 'testnet'" [routerLink]="networkPaths['testnet'] || '/testnet'"><app-svg-images name="testnet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet3</a>
-      <a ngbDropdownItem *ngIf="env.TESTNET4_ENABLED" class="testnet4" [class.active]="network.val === 'testnet4'" [routerLink]="networkPaths['testnet4'] || '/testnet4'"><app-svg-images name="testnet4" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet4</a>
-      <a [href]="env.LIQUID_WEBSITE_URL + urlLanguage + (networkPaths['liquid'] || '')" ngbDropdownItem *ngIf="env.LIQUID_ENABLED" class="liquid" [class.active]="network.val === 'liquid'"><app-svg-images name="liquid" width="22" height="22" viewBox="0 0 125 125" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Liquid</a>
-      <a [href]="env.LIQUID_WEBSITE_URL + urlLanguage  + (networkPaths['liquidtestnet'] || '/testnet')" ngbDropdownItem *ngIf="env.LIQUID_TESTNET_ENABLED" class="liquidtestnet" [class.active]="network.val === 'liquid'"><app-svg-images name="liquidtestnet" width="22" height="22" viewBox="0 0 125 125" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Liquid Testnet</a>
+
+    <div class="explorers-dropdown" [class.open]="explorersMenuOpen">
+      <div class="explorers-overlay" (click)="toggleExplorersMenu()"></div>
+      <div class="explorers-content">
+        <h2 class="explorers-title">Explorers</h2>
+        <nav class="explorers-list">
+          <a href="https://btcscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="bitcoinImageSource" alt="Bitcoin logo">
+            <span class="explorer-name">BTC Explorer</span>
+          </a>
+          <a href="https://ethscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="ethImageSource" alt="Ethereum logo">
+            <span class="explorer-name">ETH Explorer</span>
+          </a>
+          <a href="https://xmrscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="moneroImageSource" alt="Monero logo">
+            <span class="explorer-name">XMR Explorer</span>
+          </a>
+          <a href="https://moneroexplorer.org/#/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="moneroIconImageSource" alt="Monero logo">
+            <span class="explorer-name">Monero Explorer</span>
+          </a>
+          <a href="https://btcmempool.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="mempoolIconImageSource" alt="BTC Mempool logo">
+            <span class="explorer-name">BTC Mempool</span>
+          </a>
+          <a href="https://btcfee.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="btcFeeIconImageSource" alt="BTC Fee logo">
+            <span class="explorer-name">BTC Fee</span>
+          </a>
+          <a href="https://btcfees.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+            <img [src]="btcFeesIconImageSource" alt="BTC Fees logo">
+            <span class="explorer-name">BTC Fees</span>
+          </a>
+        </nav>
+      </div>
     </div>
   </div>
 
@@ -118,13 +172,57 @@
           <div class="svg-wrapper"><app-svg-images name="nav-book" width="21.59" height="100%"></app-svg-images></div>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" id="btn-about">
-        <a class="nav-link" [routerLink]="['/about']" (click)="collapse()">
-          <div class="svg-wrapper"><app-svg-images name="nav-info-circle" width="21.59" height="100%"></app-svg-images></div>
-        </a>
-      </li>
+<!--      <li class="nav-item" routerLinkActive="active" id="btn-about">-->
+<!--        <a class="nav-link" [routerLink]="['/about']" (click)="collapse()"><fa-icon [icon]="['fas', 'info-circle']" [fixedWidth]="true" i18n-title="master-page.about" title="About"></fa-icon></a>-->
+<!--      </li>-->
     </ul>
     <app-search-form [hamburgerOpen]="enterpriseInfo === null && user != null" class="search-form-container" location="top" (searchTriggered)="collapse()"></app-search-form>
+
+    <!-- Explorers Hamburger Menu - Desktop only -->
+    <div class="explorers-menu-container explorers-menu-desktop">
+      <button class="explorers-hamburger-btn" (click)="toggleExplorersMenu()" [attr.aria-expanded]="explorersMenuOpen">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <div class="explorers-dropdown" [class.open]="explorersMenuOpen">
+        <div class="explorers-overlay" (click)="toggleExplorersMenu()"></div>
+        <div class="explorers-content">
+          <h2 class="explorers-title">Explorers</h2>
+          <nav class="explorers-list">
+            <a href="https://btcscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="bitcoinImageSource" alt="Bitcoin logo">
+              <span class="explorer-name">BTC Explorer</span>
+            </a>
+            <a href="https://ethscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="ethImageSource" alt="Ethereum logo">
+              <span class="explorer-name">ETH Explorer</span>
+            </a>
+            <a href="https://xmrscan.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="moneroImageSource" alt="Monero logo">
+              <span class="explorer-name">XMR Explorer</span>
+            </a>
+            <a href="https://moneroexplorer.org/#/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="moneroIconImageSource" alt="Monero logo">
+              <span class="explorer-name">Monero Explorer</span>
+            </a>
+            <a href="https://btcmempool.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="mempoolIconImageSource" alt="BTC Mempool logo">
+              <span class="explorer-name">BTC Mempool</span>
+            </a>
+            <a href="https://btcfee.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="btcFeeIconImageSource" alt="BTC Fee logo">
+              <span class="explorer-name">BTC Fee</span>
+            </a>
+            <a href="https://btcfees.org/" target="_blank" class="explorer-item" (click)="toggleExplorersMenu()">
+              <img [src]="btcFeesIconImageSource" alt="BTC Fees logo">
+              <span class="explorer-name">BTC Fees</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 <app-menu *ngIf="servicesEnabled" [navOpen]="menuOpen" (loggedOut)="onLoggedOut()" (menuToggled)="menuToggled($event)"></app-menu>

@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const {readFileSync, existsSync} = require('fs');
+// const {existsSync} = require('fs');
 const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const template = fs.readFileSync(path.join(process.cwd(), 'dist/mempool/browser/en-US/', 'index.html')).toString();
@@ -40,18 +40,12 @@ global['localStorage'] = {
 
 /**
  * Return the list of supported and actually active locales
+ * Locale detection disabled - always returns only en-US
  */
-function getActiveLocales() {
-  const angularConfig = JSON.parse(readFileSync('angular.json', 'utf8'));
-
-  const supportedLocales = [
-    angularConfig.projects.mempool.i18n.sourceLocale,
-    ...Object.keys(angularConfig.projects.mempool.i18n.locales),
-  ];
-
-  return supportedLocales.filter(locale => locale === 'en-US' && existsSync(`./dist/mempool/server/${locale}`));
-  // return supportedLocales.filter(locale => existsSync(`./dist/mempool/server/${locale}`));
-}
+// function getActiveLocales() {
+//   // Locale detection disabled - always use en-US only
+//   return ['en-US'].filter(locale => existsSync(`./dist/mempool/server/${locale}`));
+// }
 
 function app() {
   const server = express();
@@ -79,15 +73,14 @@ function app() {
   server.use('/', appServerModule.app(defaultLocale));
   server.use('/en', appServerModule.app(defaultLocale));
 
-  // map each locale to its localized main.js
-  getActiveLocales().forEach(locale => {
-    console.log('serving locale:', locale);
-    const appServerModule = require(`./dist/mempool/server/${locale}/main.js`);
-
-    // map everything to itself
-    server.use(`/${locale}`, appServerModule.app(locale));
-
-  });
+  // locale routing disabled - only en-US is served
+  // getActiveLocales().forEach(locale => {
+  //   console.log('serving locale:', locale);
+  //   const appServerModule = require(`./dist/mempool/server/${locale}/main.js`);
+  //
+  //   // map everything to itself
+  //   server.use(`/${locale}`, appServerModule.app(locale));
+  // });
 
   return server;
 }

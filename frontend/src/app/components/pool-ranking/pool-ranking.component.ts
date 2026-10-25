@@ -5,7 +5,7 @@ import { EChartsOption, PieSeriesOption } from '@app/graphs/echarts';
 import { merge, Observable } from 'rxjs';
 import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { SeoService } from '@app/services/seo.service';
-import { StorageService } from '@app//services/storage.service';
+import { StorageService } from '@app/services/storage.service';
 import { MiningService, MiningStats } from '@app/services/mining.service';
 import { StateService } from '@app/services/state.service';
 import { originalChartColors as chartColors, poolsColor } from '@app/app.constants';
@@ -57,8 +57,10 @@ export class PoolRankingComponent implements OnInit {
     if (this.widget) {
       this.miningWindowPreference = '1w';
     } else {
-      this.seoService.setTitle($localize`:@@fe5317c6c60dd7e0e86f04d22f566f67cf04d404:Mining Pools`);
-      this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.pool-ranking:See the top Bitcoin mining pools ranked by number of blocks mined, over your desired timeframe.`);
+      // this.seoService.setTitle($localize`:@@mining.mining-pools:Mining Pools`);
+      this.seoService.setTitle('Mining Pools');
+      // this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.pool-ranking:See the top Bitcoin mining pools ranked by number of blocks mined, over your desired timeframe.`);
+      this.seoService.setDescription('View the top Bitcoin mining pools, including Binance and Foundry USA, ranked by the number of blocks mined over your chosen timeframe.');
       this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     }
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
@@ -147,7 +149,7 @@ export class PoolRankingComponent implements OnInit {
         name: pool.name + ((isMobile() || this.widget) ? `` : ` (${pool.share}%)`),
         label: {
           overflow: 'none',
-          color: 'var(--tooltip-grey)',
+          color: '#b1b1b1',
           alignTo: 'edge',
           edgeDistance: edgeDistance,
         },
@@ -309,14 +311,14 @@ export class PoolRankingComponent implements OnInit {
 
   onSaveChart() {
     const now = new Date();
-    this.chartOptions.backgroundColor = 'var(--active-bg)';
-    this.chartInstance.setOption(this.chartOptions);
+    // this.chartOptions.backgroundColor = 'var(--active-bg)';
+    // this.chartInstance.setOption(this.chartOptions);
     download(this.chartInstance.getDataURL({
       pixelRatio: 2,
       excludeComponents: ['dataZoom'],
     }), `pools-ranking-${this.timespan}-${Math.round(now.getTime() / 1000)}.svg`);
-    this.chartOptions.backgroundColor = 'none';
-    this.chartInstance.setOption(this.chartOptions);
+    // this.chartOptions.backgroundColor = 'none';
+    // this.chartInstance.setOption(this.chartOptions);
   }
 
   isEllipsisActive(e) {

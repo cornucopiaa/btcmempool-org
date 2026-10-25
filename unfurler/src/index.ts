@@ -44,18 +44,7 @@ class Server {
     this.network = config.MEMPOOL.NETWORK || 'bitcoin';
     this.networkName = networks[this.network].networkName || capitalize(this.network);
 
-    let canonical;
-    switch(config.MEMPOOL.NETWORK) {
-      case "liquid":
-        canonical = "https://liquid.network"
-        break;
-      case "onbtc":
-        canonical = "https://bitcoin.gob.sv"
-        break;
-      default:
-        canonical = "https://mempool.space"
-    }
-    this.canonicalHost = canonical;
+    this.canonicalHost = config.SERVER.HOST;
 
     this.startServer();
 

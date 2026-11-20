@@ -1,0 +1,13 @@
+# Repackage the deployed application; do not rebuild unrelated frontend code.
+ARG APP_IMAGE=btcmempool-prod-1
+FROM ${APP_IMAGE} AS deployed
+FROM nginx:1.31.9-alpine@sha256:e68702efeaad0be9ced2b4d1cedb62cd15f5d51865d913955a883f653cd9e117
+COPY --from=deployed --chown=1000:1000 /patch/ /patch/
+COPY --from=deployed --chown=1000:1000 /var/www/mempool/ /var/www/mempool/
+COPY --from=deployed --chown=1000:1000 /etc/nginx/ /etc/nginx/
+RUN chown -R 1000:1000 /var/cache/nginx /var/log/nginx && \
+    touch /var/run/nginx.pid && chown 1000:1000 /var/run/nginx.pid
+WORKDIR /patch
+USER 1000
+ENTRYPOINT ["/patch/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

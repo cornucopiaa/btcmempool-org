@@ -18,7 +18,7 @@ RUN npm install --omit=dev --omit=optional
 
 RUN SKIP_SYNC=1 npm run build
 
-FROM nginx:1.27.0-alpine
+FROM nginx:1.31.9-alpine@sha256:e68702efeaad0be9ced2b4d1cedb62cd15f5d51865d913955a883f653cd9e117
 
 WORKDIR /patch
 
